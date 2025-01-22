@@ -41,6 +41,7 @@
   ![preview](./Images/Python2.png)
   ![preview](./Images/Python3.png)
 
+
 # Data Types
 * In programming, a data type is a classification or categorization that specifies which type of value a variable can hold.
 * Data types are essential because they determine how data is stored in memory and what operations can be performed on that data.
@@ -277,5 +278,168 @@
       split_result = re.split(pattern, text)
       print("Split Result:", split_result)
       ```
-  * `re.split()` is used to **split a string based on a specific pattern** (in this case, a comma `,`).
+    * `re.split()` is used to **split a string based on a specific pattern** (in this case, a comma `,`).
   ![preview](./Images/Python16.png)
+
+
+# Keywords in Python
+* Keywords are reserved words in Python that have predefined meanings and cannot be used as variable names or identifiers.
+* These words are used to define the structure and logic of the program.
+* They are an integral part of the Python language and are case-sensitive, which means you must use them exactly as specified.
+* Here are some important Python keywords:
+  * **and:** A logical operator that returns `True` only if `both conditions are True`.
+  * **or:** A logical operator that returns `True` if `at least one condition is True`.
+  * **not:** A logical operator that flips the condition. If `it’s True, it becomes False`, and vice versa.
+  * **if:** Starts a conditional block. `If` the condition is `True`, `the code inside runs`.
+  * **else:** `Runs a block of code` if the `if` condition is `False`.
+  * **elif:** Short for "else if," it is used to check additional conditions after an `if` statement and is used in combination with `if` and `else`.
+  * **while:** It is used to create a loop that `repeatedly executes a block of code` as long as a `specified condition is true`.
+  * **for:** It is used to create a loop that iterates over a sequence (such as a list, tuple, or string) and `executes a block of code for each item in the sequence`.
+  * **in:** Used with `if`, it checks if a value is present in a sequence.
+  * **try:** It is the beginning of a block of code that is subject to exception handling. It is followed by `except` to catch and handle exceptions.
+  * **except:** Used with `try`, it defines a block of code to execute when an exception is raised in the corresponding `try` block.
+  * **finally:** Used with `try`, it defines a block of code that is always executed, whether an exception is raised or not.
+  * **def:** It is used to `define a function` in Python.
+  * **return:** It is used within a function to `specify the value that the function should return`.
+  * **class:** It is used to define a class, which is a blueprint for creating objects in object-oriented programming.
+  * **import:** It is used to `import modules` or libraries to access their functions, classes, or variables.
+  * **from:** Used with `import` to specify which specific components from a module should be imported.
+  * **as:** Used with `import` to create an alias for a module, making it easier to reference in the code.
+  * **True:** It represents a boolean value for `true`.
+  * **False:** It represents a boolean value for `false`.
+  * **None:** It represents a special `null value` or `absence of value`.
+  * **is:** It is used for identity comparison, checking if two variables refer to the same object in memory.
+  * **lambda:** It is used to create small, anonymous functions (lambda functions).
+  * **with:** It is used for context management, ensuring that certain operations are performed before and after a block of code.
+  * **global:** It is used to declare a global variable within a function's scope.
+  * **nonlocal:** It is used to declare a variable as nonlocal, which allows modifying a variable in an enclosing (but non-global) scope.
+
+
+# Understanding Variables in Python
+* In Python, a variable is a named storage location used to store data.
+* Variables are essential for programming as they allow us to work with data, manipulate it, and make our code more flexible and reusable.
+* **Example:**
+    ```python
+    #Assigning a Value to a Variable
+    my_variable = 24
+
+    #Accessing the Value of a Variable
+    print(my_variable)
+    ```
+  * When you print the Variable, it prints the value assigned to that Variable.
+  ![preview](./Images/Python17.png)
+
+## Variable Scope and Lifetime:
+* **Variable Scope:** In Python, Variables have different Scopes, which determine where in the code the Variable can be accessed. There are mainly two types of Variable Scopes:
+  1. **Local Scope:** Variables defined within a function have local scope and are only accessible inside that function.
+      ```python
+      def my_function():
+        s = 22    #Local Variable
+        print(s)
+      
+      my_function()
+      print(s)
+      ```
+       * The Variable `s` is a Local Variable because it is defined inside the `my_function`. When you print the Variable `s` directly, it raises an error because the Variable `s` is not defined outside the function.
+  ![preview](./Images/Python18.png)
+  1. **Global Scope:** Variables defined outside of any function have global scope and can be accessed throughout the entire code.
+      ```python
+      k = 44    #Global Variable
+
+      def my_function():
+        print(k)
+      
+      my_function()
+      print(k)
+      ```
+       * The Variable `k` is a Global Variable because it is not defined inside any function. When you print `k` inside `my_function` and outside of function, in both cases it prints the Variable Value because global variables are accessible throughout the entire program.
+  ![preview](./Images/Python19.png)
+* **Variable Lifetime:**
+  * The Lifetime of a Variable is determined by when it is created and when it is destroyed or goes out of scope.
+  * Local variables exist only while the function is being executed, while global variables exist for the entire duration of the program.
+
+## Variable Naming Conventions and Best Practices
+* It's important to follow naming conventions and best practices for Variables to write clean and maintainable code:
+  * Variable Names should be Descriptive and indicate their Purpose.
+  * Use Lowercase Letters and separate words with Underscores `_` (snake_case) for Variable Names.
+  * Avoid using Reserved Words `(Keywords)` for Variable Names.
+  * Choose Meaningful Names for Variables.
+* **Example:**
+    ```python
+    #Good Variable Naming
+    user_name = "Suresh"
+    total_items = 22
+
+    #Avoid using of Reserved Words
+    class = "Python"  #Not Recommended
+
+    #Use Meaningful Names
+    s = 10                #Less Clear
+    num_of_students = 10  #More Descriptive
+    ```
+
+## Explanation of Variable Updates
+* In Python, when you assign a value to a variable, it overwrites the previous value stored in that variable.
+* After updating a variable, any further use of that variable will refer to the updated value, not the original one.
+* **No Conflicts:** There are no conflicts because Python allows variables to be re-assigned at any point in your code. The last assigned value is what the variable holds.
+* **Example:**
+    ```python
+    port = 80
+    print(f"Port: {port}")
+
+    port = 443
+    print(f"Updated Port: {port}")
+    ```
+  ![preview](./Images/Python20.png)
+  * **First Assignment:**
+    * When `port = 80` is defined, the variable `port` stores the value `80`.
+    * The first `print(f"Port: {port}")` fetches the current value of `port` (which is `80`) and prints it.
+  * **Re-assignment:**
+    * When `port = 443` is executed, Python replaces the previous value of `port` with the new value (`443`).
+    * Now, any further reference to `port` will use the updated value (`443`).
+  * **No Conflicts:**
+    * Python works in a linear, top-to-bottom manner.
+    * When a variable is updated, it simply stores the new value, and the old value is no longer relevant.
+
+# Exercises
+* **Example:** Using Variables to Store and Manipulate Configuration Data in a DevOps Context
+  * In a DevOps context, you often need to manage configuration data for various services or environments.
+  * Variables are essential for this purpose.
+  * Let's consider a scenario where we need to store and manipulate configuration data for a web server.
+    ```python
+    #Define Configuration Variables for a Wed Server
+    server_name = "My_Nginx_Server"
+    port = 80
+    is_https_enabled = False
+    max_connections = 500
+
+    #Print the Configuration
+    print(f"Server Name: {server_name}")
+    print(f"Port: {port}")
+    print(f"HTTPs Enabled: {is_https_enabled}")
+    print(f"Max Connections: {max_connections}")
+
+    #Update Configuration Values
+    port = 443
+    is_https_enabled = True
+
+    #Print the Updated Configuration
+    print(f"Updated Port: {port}")
+    print(f"HTTPs Enabled: {is_https_enabled}")
+    ```
+    * In this example, we use variables to store and manipulate configuration data for a web server.
+    * This allows us to easily update and manage the server's configuration in a DevOps context.
+  ![preview](./Images/Python21.png)
+
+
+# Some Important Points
+## Formatted Strings (f)
+* The `f` in `print(f"...")` is used to create **f-strings** (short for **formatted strings**) in Python.
+* F-strings are a way to embed expressions inside string literals, using curly braces `{}`.
+* They make it easy to include variable values or expressions directly within a string.
+* The formate is `print(f"Name: {Var_Name}")`
+* **Example:**
+    ```python
+    port = 80
+    print(f"Port: {port}")
+    ```
