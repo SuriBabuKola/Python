@@ -443,3 +443,327 @@
     port = 80
     print(f"Port: {port}")
     ```
+
+
+# Python Functions, Modules and Packages
+## Python Functions
+* A function in Python is a block of code that performs a specific task.
+* Functions are defined using the `def` keyword and can take inputs, called arguments.
+* They are a way to encapsulate and reuse code.
+* Function takes the Inputs, perform required Logics and finally returns Output.
+* **Example:**
+    ```python
+    #Define Function
+    def greet(name):
+        return f"Hello, {name}!"
+    
+    #Call the Function
+    message = greet("Suresh")
+    print(message)
+    ```
+  * In this example, `greet` is a function that takes a `name` argument and returns a greeting message.
+  ![preview](./Images/Python22.png)
+### Python Functions Exercises
+* **Example:1** Write Program for Calculator using Functions
+    ```python
+    num1 = 20
+    num2 = 5
+
+    def addition():
+        add = num1 + num2
+        print("Addition:", add)
+    
+    def subtraction():
+        sub = num1 - num2
+        print("Subtraction:", sub)
+    
+    def multiplication():
+        mul = num1 * num2
+        print("Multiplication:", mul)
+    
+    def division():
+        div = num1 / num2
+        print("Division:", div)
+    
+    addition()
+    subtraction()
+    multiplication()
+    division()
+    ```
+  * In above example, we need to call functions explicitly, which means at the end we need to provide the function name `<Function_Name>()`
+  * In the above example, we have hard-coded the values.
+  ![preview](./Images/Python23.png)
+* **Example:2** Write Program for Calculator using Functions with `return` Keyword
+    ```python
+    def addition(num1, num2):
+        add = num1 + num2
+        return add
+    
+    def subtraction(num1, num2):
+        sub = num1 - num2
+        return sub
+    
+    def multiplication(num1, num2):
+        mul = num1 * num2
+        return mul
+    
+    def division(num1, num2):
+        div = num1 / num2
+        return div
+    
+    print("Addition:", addition(20, 5))
+    print("Subtraction:", subtraction(10, 5))
+    print("Multiplication:", multiplication(5, 15))
+    print("Division:", division(50, 5))
+    ```
+  * In the previous example, we hard-coded the values for all functions. In the above example, we pass different values for different functions.
+  ![preview](./Images/Python24.png)
+
+## Python Modules
+* A module is a Python script containing Python code.
+* It can define functions, classes, and variables that can be used in other Python scripts.
+* Modules help organize and modularize your code, making it more maintainable.
+* To use Module, we can use keyword `import`
+* The main types of Python modules are
+  1. **Built-in Modules:**
+     * These modules are included with Python's standard library and do not require installation.
+     * **Examples:**
+       * `os` (interacting with the operating system)
+       * `sys` (system-specific parameters and functions)
+       * `math` (mathematical functions)
+     * **Usage:**
+        ```python
+        import os
+        import math
+
+        print(os.getcwd())    #Print Current Working Directory
+        print(math.sqrt(16))  #Print 4.0
+        ```
+  2. **Third-Party Modules:**
+     * These are external modules developed by the community and available on the **Python Package Index (PyPI)**. You can install them using `pip`.
+     * **Examples:**
+       * `requests` (HTTP requests)
+       * `numpy` (numerical computations)
+       * `pandas` (data manipulation and analysis)
+     * **Usage:**
+       * First, install using `pip`:
+          ```bash
+          pip install requests
+          ```
+       * Then use it in your code:
+          ```python
+          import requests
+
+          response = requests.get("https://api.github.com")
+          print(response.status_code)  # Prints the HTTP response code
+          ```
+  3. **Custom (Local) Modules:**
+     * These are user-created Python files (`.py`) containing functions, classes, and variables, specific to your project. They are used to organize code into reusable components.
+     * **Example:**
+       * File structure:
+          ```css
+          project/
+                ├── main.py
+                ├── mymodule.py
+          ```
+       * `mymodule.py:`
+          ```python
+          def greet(name):
+              return f"Hello, {name}!"
+          ```
+       * `main.py:`
+          ```python
+          import mymodule
+
+          print(mymodule.greet("Suresh"))  # Output: Hello, Suresh!
+          ```
+### Python Modules Exercises
+* **Example:1**
+  * Suppose you have a Python file named `my_module.py`:
+      ```python
+      # my_module.py
+      def square(x):
+          return x ** 2
+
+      pi = 3.14159265
+      ```
+  * You can use this module in another script:
+      ```python
+      import my_module
+
+      result = my_module.square(3)
+      print("Square Value:", result)
+      print("Pi VAlue:", my_module.pi)
+      ```
+  * In this case, `my_module` is a Python module containing the `square` function and a variable `pi`.
+  ![preview](./Images/Python25.png)
+* **Example:2** Write Program for Advance_Calculator using Calculator Module
+  * File structure:
+      ```css
+      project_2/
+              ├── advance_calculator.py
+              ├── calculator.py
+      ```
+  * `calculator.py:`
+      ```python
+      def addition(num1, num2):
+          add = num1 + num2
+          return add
+
+      def subtraction(num1, num2):
+          sub = num1 - num2
+          return sub
+      ```
+  * For Advance_Calculator, we require Addition, Subtraction, Multiplication, and Division.
+    * For Addition and Subtraction, we import the `calculator.py` Module.
+    * For Multiplication and Division, we define Functions.
+  * `advance_calculator.py:`
+      ```python
+      import calculator
+
+      def multiplication(num1, num2):
+          mul = num1 * num2
+          return mul
+      
+      def division(num1, num2):
+          div = num1 / num2
+          return div
+      
+      print("Addition:", calculator.addition(5, 15))
+      print("Subtraction:", calculator.subtraction(20, 18))
+      print("Multiplication:", multiplication(25, 4))
+      print("Division:", division(45, 5))
+      ```
+  ![preview](./Images/Python26.png)
+
+## Python Packages
+* A package is a collection of Python modules grouped together in a directory.
+* Packages help to organize and distribute related modules efficiently.
+* **Structure of a Package:** A package must include a special `__init__.py` file (can be empty), which indicates that the directory is a Python package.
+* **Example Directory Structure:**
+    ```css
+    package/
+            ├── __init__.py
+            ├── module_1.py
+            ├── module_2.py
+    ```
+* **Creating a Package:**
+  * Create the `package directory`:
+      ```
+      package/
+      ```
+  * Add an empty `__init__.py` file:
+      ```
+      package/__init__.py
+      ```
+  * Add `Modules` to the Package:
+       * `package/module_1.py:`
+          ```python
+          def greet(name):
+              return f"Hello, {name}!"
+          ```
+       * `package/module_2.py:`
+          ```python
+          def add(a, b):
+              return a + b
+          ```
+  * Use the Package:
+      ```python
+      from package import module_1, module_2
+
+      print("Greeting:", module_1.greet("Suresh"))
+      print("Addition:", module_2.add(5, 10))
+      ```
+  * In this example, `package` is a Python Package containing Modules `module_1` and `module_2`.
+  ![preview](./Images/Python27.png)
+
+## How to Import a Package
+* To import a package in Python, you use the `import` statement.
+* You can import the entire package, specific modules, or individual functions/variables from a module.
+* Python provides multiple ways to import packages or modules depending on your use case.
+  * **Import the entire Package or Module:** 
+      ```
+      import <Package_Name/Module_Name>
+      ```
+    * Example:
+        ```python
+        import math
+        print(math.sqrt(16))  # Outputs: 4.0
+        ```
+  * **Import a Specific Function or Class from a Package or Module:** 
+      ```
+      from <Package_Name> import <Specific_function>
+      ```
+    * Example:
+        ```python
+        from math import sqrt
+        print(sqrt(16))  # Outputs: 4.0
+        ```
+  * **Import Multiple Functions or Classes from a Package or Module:**
+      ```
+      from <Package_Name> import <func1>, <func2>
+      ```
+    * Example:
+        ```python
+        from math import pow, ceil
+        print(pow(2, 3))  # Outputs: 8.0
+        print(ceil(4.2))  # Outputs: 5
+        ```
+  * **Import with an Alias:**
+      ```
+      import <Package_Name> as <Alias_Name>
+      ```
+    * Example:
+        ```python
+        import numpy as np
+        print(np.array([1, 2, 3]))
+        ```
+  * **Import Specific Functions or Classes with an Alias:**
+      ```
+      from <Package_Name> import <Specific_Function> as <Alias_Name>
+      ```
+    * Example:
+        ```python
+        from math import sqrt as square_root
+        print(square_root(16))  # Outputs: 4.0
+        ```
+
+# Python Workspaces
+* A Python workspace refers to the environment in which you develop and run your Python code. It consists of the following components:
+  * **Python Interpreter:** The version of Python used to execute your code.
+  * **Installed Libraries:** The modules and packages available in your environment.
+  * **Current Working Directory (CWD):** The directory where your Python scripts and files reside.
+* Understanding Python workspaces is crucial for effective project management, dependency handling, and maintaining clean code organization.
+
+## Types of Python Workspaces
+### Local Environment
+* This refers to the system-wide Python installation.
+* All users on the system can access the same Python interpreter and libraries.
+* Not recommended for projects requiring different dependencies or versions.
+### Virtual Environment
+* An isolated environment for a specific project.
+* Each virtual environment has its own Python interpreter and libraries.
+* Ensures no conflicts between dependencies across projects.
+* You can create virtual environments using tools like `virtualenv` or `venv`.
+* **Steps to Create a Virtual Environment:**
+  * Create the Environment:
+      ```bash
+      python -m venv <Venv_Name>
+      ```
+    * This creates a folder named venv containing the environment.
+  ![preview](./Images/Python28.png)
+  * Activate the Environment:
+    * On Linux/macOS:
+        ```bash
+        source venv/bin/activate
+        ```
+    * On Windows:
+        ```bash
+        venv\Scripts\activate
+        ```
+  ![preview](./Images/Python29.png)
+  * Deactivate the Environment:
+      ```bash
+      deactivate
+      ```
+  ![preview](./Images/Python30.png)
