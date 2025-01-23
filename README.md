@@ -767,3 +767,82 @@
       deactivate
       ```
   ![preview](./Images/Python30.png)
+
+
+# Command Line Arguments
+* Command line arguments are inputs passed to a script at the time of execution via the command line.
+* They are accessed using the `sys` module.
+* **Example:**
+  * Write a Program using `sys` Module for Calculator `calculator_cla.py`
+      ```python
+      import sys
+
+      def add(num1, num2):
+          a = num1 + num2
+          return a
+      
+      def sub(num1, num2):
+          s = num1 - num2
+          return s
+      
+      def mul(num1, num2):
+          m = num1 * num2
+          return m
+      
+      def div(num1, num2):
+          d = num1 / num2
+          return d
+      
+      num1 = float(sys.argv[1])
+      operation = sys.argv[2]
+      num2 = float(sys.argv[3])
+
+      if operation == "add":
+         output = add(num1, num2)
+         print("Addition:", output)
+      
+      elif operation == "sub":
+         output = sub(num1, num2)
+         print("Subtraction:", output)
+      
+      elif operation == "mul":
+         output = mul(num1, num2)
+         print("Multiplication:", output)
+      
+      elif operation == "div":
+         output = div(num1, num2)
+         print("Division:", output)
+      
+      else:
+         print("a mismatch in the operation name")
+      ```
+    * Based on the value of the `operation argument`, the script calls the corresponding function and prints the result. `If` the `operation` is "add", it calls the `add function` and prints the addition result. Similarly, it handles "sub", "mul", and "div" operations by calling the respective functions and printing the results.
+    * If the operation does not match any of the predefined operations, the script prints an error message indicating a mismatch in the operation name.
+  * Example Usage:
+      ```bash
+      python <Program_Filename> <arg1> <arg2> <arg3>
+      ```
+  ![preview](./Images/Python31.png)
+
+
+# Environment Variables
+* Environment variables are key-value pairs set in the environment that can be accessed by a Python script.
+* Environment variables are used to pass sensitive information in Python, such as API keys, database credentials, and configuration settings.
+* They are accessed using the `os` module.
+* **Example:**
+  * Add Environment Variables manually
+      ```bash
+      export <Env_Name>="<Value>"
+      ```
+  ![preview](./Images/Python32.png)
+  * Use that Environment Variables in Program `env.py`
+      ```python
+      import os
+
+      user_name = os.getenv("username")
+      password = os.getenv("password")
+
+      print(f"Username: {user_name}")
+      print("Password:", password)
+      ```
+  ![preview](./Images/Python33.png)
