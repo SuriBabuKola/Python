@@ -846,3 +846,331 @@
       print("Password:", password)
       ```
   ![preview](./Images/Python33.png)
+
+
+# Operators in Python
+* Operators in Python are special symbols or keywords that are used to perform operations on variables and values.
+* Python supports a wide range of operators, categorized into several types.
+* These operators allow you to perform tasks such as arithmetic calculations, assign values to variables, compare values, perform logical operations, and more.
+
+## Arithmetic Operators
+* Arithmetic operators in Python allow you to perform basic mathematical calculations on numeric values.
+* These operators include addition, subtraction, multiplication, division, and more.
+* **List of Arithmetic Operators:**
+  * **Addition (+):** Adds two numbers.
+      ```python
+      a = 5
+      b = 2
+      result = a + b
+      print(result)  # Output: 7
+      ```
+  * **Subtraction (-):** Subtracts the right operand from the left operand.
+      ```python
+      a = 5
+      b = 2
+      result = a - b
+      print(result)  # Output: 3
+      ```
+  * **Multiplication (*):** Multiplies two numbers.
+      ```python
+      a = 5
+      b = 2
+      result = a * b
+      print(result)  # Output: 10
+      ```
+  * **Division (/):** Divides the left operand by the right operand (results in a floating-point number).
+      ```python
+      a = 5
+      b = 2
+      result = a / b
+      print(result)  # Output: 2.5
+      ```
+  * **Floor Division (//):** Divides the left operand by the right operand and rounds down to the nearest whole number.
+      ```python
+      a = 5
+      b = 2
+      result = a // b
+      print(result)  # Output: 2
+      ```
+  * **Modulus (%):** Returns the remainder of the division of the left operand by the right operand.
+      ```python
+      a = 5
+      b = 2
+      result = a % b
+      print(result)  # Output: 1
+      ```
+  * **Exponentiation (`**`):** Raises the left operand to the power of the right operand.
+      ```python
+      a = 5
+      b = 2
+      result = a ** b
+      print(result)  # Output: 25
+      ```
+
+## Assignment Operators
+* Assignment operators in Python are used to assign values to variables.
+* These include the basic assignment operator (`=`) and compound assignment operators, which combine an operation with assignment.
+* **List of Assignment Operators:**
+  * **Basic Assignment (`=`):** Assigns a value to a variable.
+      ```python
+      x = 5
+      print(x)  # Output: 5
+      ```
+  * **Addition Assignment (`+=`):** Adds the right operand to the left operand and assigns the result to the left operand.
+      ```python
+      y = 10
+      y += 3  # Equivalent to y = y + 3
+      print(y)  # Output: 13
+      ```
+  * **Subtraction Assignment (`-=`):** Subtracts the right operand from the left operand and assigns the result to the left operand.
+      ```python
+      z = 20
+      z -= 5  # Equivalent to z = z - 5
+      print(z)  # Output: 15
+      ```
+  * **Multiplication Assignment (`*=`):** Multiplies the left operand by the right operand and assigns the result to the left operand.
+      ```python
+      a = 4
+      a *= 3  # Equivalent to a = a * 3
+      print(a)  # Output: 12
+      ```
+  * **Division Assignment (`/=`):** Divides the left operand by the right operand and assigns the result to the left operand.
+      ```python
+      b = 15
+      b /= 3  # Equivalent to b = b / 3
+      print(b)  # Output: 5.0
+      ```
+  * **Floor Division Assignment (`//=`):** Performs floor division on the left operand and assigns the result to the left operand.
+      ```python
+      c = 17
+      c //= 3  # Equivalent to c = c // 3
+      print(c)  # Output: 5
+      ```
+  * **Modulus Assignment (`%=`):** Calculates the modulus of the left operand and assigns the result to the left operand.
+      ```python
+      d = 22
+      d %= 7  # Equivalent to d = d % 7
+      print(d)  # Output: 1
+      ```
+  * **Exponentiation Assignment (`**=`):** Raises the left operand to the power of the right operand and assigns the result to the left operand.
+      ```python
+      e = 2
+      e **= 3  # Equivalent to e = e ** 3
+      print(e)  # Output: 8
+      ```
+
+## Relational Operators
+* Relational operators are used to compare two values and determine their relationship.
+* These operators return a Boolean result, either `True` or `False`, based on the comparison.
+* **List of Relational Operators:**
+  * **Equal to (`==`):** Checks if two values are equal.
+      ```python
+      a = 5
+      b = 5
+      result = a == b
+      print(result)  # Output: True
+      ```
+  * **Not equal to (`!=`):** Checks if two values are not equal.
+      ```python
+      x = 10
+      y = 7
+      result = x != y
+      print(result)  # Output: True
+      ```
+  * **Greater than (`>`):** Checks if the left operand is greater than the right operand.
+      ```python
+      num1 = 8
+      num2 = 6
+      result = num1 > num2
+      print(result)  # Output: True
+      ```
+  * **Less than (`<`):** Checks if the left operand is less than the right operand.
+      ```python
+      num1 = 4
+      num2 = 10
+      result = num1 < num2
+      print(result)  # Output: True
+      ```
+  * **Greater than or equal to (`>=`):** Checks if the left operand is greater than or equal to the right operand.
+      ```python
+      value1 = 15
+      value2 = 15
+      result = value1 >= value2
+      print(result)  # Output: True
+      ```
+  * **Less than or equal to (`<=`):** Checks if the left operand is less than or equal to the right operand.
+      ```python
+      value1 = 7
+      value2 = 9
+      result = value1 <= value2
+      print(result)  # Output: True
+      ```
+
+## Logical Operators
+* Logical operators in Python are used to combine and manipulate Boolean values.
+* They enable logical operations, such as checking multiple conditions simultaneously, which is essential for decision-making in programming.
+* **List of Logical Operators:**
+  * **AND (`and`):** Returns `True` if **both operands** are `True`, otherwise returns `False`.
+      ```python
+      x = True
+      y = False
+      result = x and y
+      print(result)  # Output: False
+
+      x = True
+      y = True
+      result = x and y
+      print(result)  # Output: True
+      ```
+  * **OR (`or`):** Returns `True` if **at least one operand** is `True`, otherwise returns `False`.
+      ```python
+      a = True
+      b = False
+      result = a or b
+      print(result)  # Output: True
+
+      a = False
+      b = False
+      result = a or b
+      print(result)  # Output: False
+      ```
+  * **NOT (`not`):** Returns the **opposite Boolean value** of the operand.
+      ```python
+      value = True
+      result = not value
+      print(result)  # Output: False
+
+      value = False
+      result = not value
+      print(result)  # Output: True
+      ```
+
+## Identity Operators
+* Identity operators in Python are used to compare the memory locations of two objects.
+* They check whether two objects are the same (i.e., refer to the same memory address) or different.
+* **List of Identity Operators:**
+  * **is:** Returns `True` if both operands refer to the same object in memory, otherwise `False`. (The `is` operator checks for object identity (memory address), not value equality.)
+      ```python
+      x = [1, 2, 3]
+      y = x  # y refers to the same object as x
+      result = x is y
+      print(result)  # Output: True
+
+      z = [1, 2, 3]  # z is a new object with the same values as x
+      result = x is z
+      print(result)  # Output: False
+      ```
+    * Here, `y` is assigned the reference of `x`. This means `x` and `y` both point to the same object in memory.
+    * When you check `x is y`, it evaluates to `True` because **`x` and `y` are literally the same object**.
+    * `z` is created as a new list with the same values as `x`.
+    * Although the **values** of `z` are the same as `x`, **Python allocates a new memory address for `z` because it is a separate object**.
+    * The `is` operator checks whether `x` and `z` refer to the same memory location.
+    * Since `z` is a new object with a different memory address, `x is z` evaluates to `False`.
+  * **is not:** Returns `True` if both operands refer to different objects in memory, otherwise `False`.
+      ```python
+      a = "hello"
+      b = "world"
+      result = a is not b
+      print(result)  # Output: True
+
+      c = a  # c refers to the same object as a
+      result = a is not c
+      print(result)  # Output: False
+      ```
+
+## Membership Operators
+* Membership operators in Python are used to test for the presence (or absence) of a value in sequences like lists, tuples, sets, dictionaries, or strings.
+* These operators return a Boolean value (`True` or `False`) based on whether the specified condition is met.
+* **List of Membership Operators:**
+  * **in:** Checks if a specified value exists within a sequence. Returns `True` if the value is found.
+      ```python
+      fruits = ["apple", "banana", "cherry"]
+      result = "banana" in fruits
+      print(result)  # Output: True
+      ```
+    * `"banana"` exists in the list `fruits`, so the result is `True`.
+  * **not in:** Checks if a specified value does **not** exist within a sequence. Returns `True` if the value is not found.
+      ```python
+      colors = ["red", "green", "blue"]
+      result = "yellow" not in colors
+      print(result)  # Output: True
+      ```
+    * `"yellow"` does not exist in the list `colors`, so the result is `True`.
+
+## Bitwise Operators
+* Bitwise operators in Python are used to directly manipulate individual bits of binary numbers.
+* These operators are particularly useful for low-level programming, bit manipulation tasks, and performance-critical applications.
+* **List of Bitwise Operators:**
+  * **Bitwise AND (`&`):** Compares each bit of two numbers and returns `1` only if both bits are `1`.
+       ```python
+       a = 5  # Binary: 0101
+       b = 3  # Binary: 0011
+       result = a & b  # Result: 0001 (Decimal: 1)
+       print(result)  # Output: 1
+       ```
+  * **Bitwise OR (`|`):** Compares each bit of two numbers and returns `1` if either bit is `1`.
+       ```python
+       x = 10  # Binary: 1010
+       y = 7   # Binary: 0111
+       result = x | y  # Result: 1111 (Decimal: 15)
+       print(result)  # Output: 15
+       ```
+  * **Bitwise XOR (`^`):** Compares each bit of two numbers and returns `1` if the bits are different.
+       ```python
+       a = 5  # Binary: 0101
+       b = 3  # Binary: 0011
+       result = a ^ b  # Result: 0110 (Decimal: 6)
+       print(result)  # Output: 6
+       ```
+  * **Bitwise NOT (`~`):** Flips all the bits in the number (0 becomes 1, and 1 becomes 0). Result is equivalent to `-(n+1)` for integers.
+       ```python
+       a = 5  # Binary: 0101
+       result = ~a  # Result: -(5+1) = -6
+       print(result)  # Output: -6
+       ```
+  * **Left Shift (`<<`):** Shifts the bits to the left by a specified number of positions, effectively multiplying the number by `2^n`, where `n` is the number of positions shifted.
+       ```python
+       a = 5  # Binary: 0101
+       result = a << 2  # Result: 10100 (Decimal: 20)
+       print(result)  # Output: 20
+       ```
+    * **Explanation of \( 2^n \):** \( 2^2 \) = 4, so shifting left by 2 is equivalent to multiplying 5 by 4 (`5x4=20`).
+  * **Right Shift (`>>`):** Shifts the bits to the right by a specified number of positions, effectively performing integer division by `2^n`, where `n` is the number of positions shifted.
+       ```python
+       a = 20  # Binary: 10100
+       result = a >> 2  # Result: 000101 (Decimal: 5)
+       print(result)  # Output: 5
+       ```
+    * **Explanation of \( 2^n \):** \( 2^2 \) = 4, so shifting right by 2 is equivalent to dividing 20 by 4 (`20÷4=5`).
+
+## Precedence of Operations
+* In Python, **Precedence of Operations** determines the order in which operators are evaluated in expressions.
+* Operators with higher precedence are evaluated first, while operators with lower precedence are evaluated later, unless parentheses are used to override this order.
+* **Examples:**
+  * **Arithmetic Operators Precedence:**
+      ```python
+      result = 5 + 3 * 2
+      # Multiplication has higher precedence, so the multiplication happens first.
+      # 3 * 2 = 6, then 5 + 6 = 11
+      print(result)  # Output: 11
+      ```
+    * In this example, **multiplication** (`*`) happens before **addition** (`+`), because multiplication has higher precedence.
+  * **Parentheses Override Precedence:** You can use parentheses to change the order of operations, regardless of operator precedence.
+      ```python
+      result = (5 + 3) * 2
+      # Parentheses override the default precedence, so 5 + 3 is evaluated first.
+      # 5 + 3 = 8, then 8 * 2 = 16
+      print(result)  # Output: 16
+      ```
+* **Summary of Precedence in a Table:**
+
+  | Operator | Description                 | Precedence  |
+  |----------|-----------------------------|-------------|
+  | `()`     | Parentheses                 | Highest     |
+  | `**`     | Exponentiation              | High        |
+  | `+x`, `-x` | Unary plus and minus      | High        |
+  | `*`, `/`, `//`, `%` | Multiplication, Division, Floor Division, Modulus | Medium |
+  | `+`, `-` | Addition, Subtraction       | Medium      |
+  | `==`, `!=`, `>`, `<`, `>=`, `<=` | Comparison Operators | Lower       |
+  | `and`    | Logical AND                 | Low         |
+  | `or`     | Logical OR                  | Lowest      |
