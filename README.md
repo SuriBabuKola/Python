@@ -1174,3 +1174,71 @@
   | `==`, `!=`, `>`, `<`, `>=`, `<=` | Comparison Operators | Lower       |
   | `and`    | Logical AND                 | Low         |
   | `or`     | Logical OR                  | Lowest      |
+
+
+# Conditional Statements in Python
+* Conditional statements are a fundamental part of programming that allow you to make decisions and execute different blocks of code based on certain conditions.
+* In Python, you can use `if`, `elif` (short for "else if"), and `else` to create conditional statements.
+
+## `if` Statement
+* The `if` statement is used to test a condition.
+* If the condition evaluates to `True`, the block of code inside the `if` statement will execute.
+* If the condition evaluates to `False`, the code block is skipped.
+    ```python
+    if condition:
+        # Code to execute if the condition is True
+    ```
+* **Example:**
+    ```python
+    x = 10
+    if x > 5:
+        print("x is greater than 5")
+    ```
+  * **Output:** `x is greater than 5`
+  * The condition `x > 5` is `True`, so the code inside the `if` block is executed.
+
+## `elif` Statement
+* The `elif` (short for "else if") statement allows you to check additional conditions if the previous `if` or `elif` conditions are `False`.
+* You can have multiple `elif` statements after the initial `if` statement.
+    ```python
+    if condition1:
+        # Code to execute if condition1 is True
+    elif condition2:
+        # Code to execute if condition2 is True
+    elif condition3:
+        # Code to execute if condition3 is True
+    else:
+        # Code to execute if none of the conditions are True
+    ```
+* **Example:**
+    ```python
+    x = 10
+    if x > 15:
+        print("x is greater than 15")
+    elif x > 5:
+        print("x is greater than 5 but not greater than 15")
+    else:
+        print("x is not greater than 5")
+    ```
+  * **Output:** `x is greater than 5 but not greater than 15`
+  * The first condition `x > 15` is `False`, so the program checks the `elif` condition `x > 5`, which is `True`, and the corresponding block is executed.
+
+## `else` Statement
+* The `else` statement is used to specify a block of code that will execute if none of the previous conditions (from `if` or `elif`) are `True`.
+* There is no condition associated with the `else` statement.
+    ```python
+    if condition:
+        # Code to execute if the condition is True
+    else:
+        # Code to execute if the condition is False
+    ```
+* **Example:**
+    ```python
+    x = 3
+    if x > 5:
+        print("x is greater than 5")
+    else:
+        print("x is not greater than 5")
+    ```
+  * **Output:** `x is not greater than 5`
+  * Since `x > 5` is `False`, the code inside the `else` block is executed.
