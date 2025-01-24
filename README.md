@@ -1242,3 +1242,173 @@
     ```
   * **Output:** `x is not greater than 5`
   * Since `x > 5` is `False`, the code inside the `else` block is executed.
+
+
+# Lists and Tuples
+## Lists and List Data Structure
+* A **list** is a versatile and commonly used data structure that allows you to store and manipulate a collection of items.
+* Lists are **ordered**, **mutable**, and can hold elements of different data types.
+* Lists are **mutable**, meaning their content can be changed (We can add or remove items in the list)
+* A **list** is a sequence of elements.
+* The elements in a list can be of any data type, such as integers, floats, strings, or even other lists.
+* Lists maintain the **insertion order**, meaning the elements appear in the same order they were added.
+* **Example:**
+    ```python
+    my_list = [1, 2, 3, 'apple', 'banana']
+    ```
+### Creating Lists
+* You can create a list using square brackets `[]` in Python.
+* **Example:**
+    ```python
+    empty_list = []  # An empty list
+    number_list = [1, 2, 3, 4]  # List of numbers
+    mixed_list = [10, "hello", 3.14, True]  # List with mixed data types
+    ```
+### List Indexing
+* **Indexing** allows you to access elements in a list using their position.
+* **Python uses zero-based indexing**, so the first element is at index `0`.
+* **Example:**
+    ```python
+    my_list = ['apple', 'banana', 'cherry']
+
+    first_element = my_list[0]  # 'apple'
+    second_element = my_list[1]  # 'banana'
+    last_element = my_list[-1]  # 'cherry' (negative indexing starts from the end)
+    ```
+### List Length
+* The `len()` function returns the number of elements in a list.
+* **Example:**
+    ```python
+    my_list = [1, 2, 3, 4]
+    list_length = len(my_list)  # 4
+    ```
+### Common List Operations
+* **Appending to a List:**
+  * Add elements to the end of the list using the `append()` method.
+      ```python
+      my_list = [1, 2, 3]
+      my_list.append(4)
+      print(my_list)  # Output: [1, 2, 3, 4]
+      ```
+* **Removing from a List:**
+  * You can remove an element by its **value** using the `remove()` method. If the value doesn't exist, it raises an error.
+      ```python
+      my_list = [1, 2, 3, 'apple']
+      my_list.remove('apple')
+      print(my_list)  # Output: [1, 2, 3]
+      ```
+* **Slicing a List:**
+  * Slicing creates a new list from a **subset** of the original list. The syntax is `list[start:end:step]`.
+      ```python
+      my_list = [0, 1, 2, 3, 4, 5]
+      subset = my_list[1:4]  # [1, 2, 3]
+      subset_with_step = my_list[::2]  # [0, 2, 4]
+      ```
+* **Concatenating Lists:**
+  * You can combine two or more lists using the `+` operator.
+      ```python
+      list1 = [1, 2, 3]
+      list2 = [4, 5]
+      combined = list1 + list2  # [1, 2, 3, 4, 5]
+
+      new_combined = list1 + [6, 7] # [1, 2, 3, 6, 7]
+      ```
+* **Sorting a List:**
+  * Use the `sort()` method to sort a list **in-place** (modifies the original list).
+      ```python
+      numbers = [4, 2, 8, 1]
+      numbers.sort()  # [1, 2, 4, 8]
+      ```
+  * To sort in descending order:
+      ```python
+      numbers.sort(reverse=True)  # [8, 4, 2, 1]
+      ```
+* **Checking for an Element:**
+  * Use the `in` keyword to check if a value exists in a list.
+    ```python
+    my_list = ['apple', 'banana', 'cherry']
+    is_present = 'banana' in my_list  # True
+    is_absent = 'grape' not in my_list  # True
+    ```
+
+## Tuple
+* A **tuple** is a data structure that is similar to a list but with one key difference: tuples are **immutable**, meaning their contents cannot be changed after they are created.
+* Tuples are useful for grouping related data that shouldn't be modified.
+* Tuples cannot be modified, making them useful for fixed data collections (Once created, you cannot add, remove, or change elements in a tuple).
+### Creating Tuples
+* Tuples are created using **parentheses** `()`
+    ```python
+    my_tuple = (1, 2, 'apple', 'banana')
+    ```
+### Tuple Indexing
+* Tuples are **indexed** like lists, starting from `0` for the first element.
+    ```python
+    first_element = my_tuple[0]  # Access the First Element (1)
+    ```
+### Tuple Length
+* To find the number of elements in a tuple, use the `len()` function
+    ```python
+    tuple_length = len(my_tuple)  # Output: 4
+    ```
+### Common Tuple Operations
+* **Accessing Elements**: Access elements by their index.
+    ```python
+    second_element = my_tuple[1]  # Access the Second Element (2)
+    ```
+* **Packing and Unpacking**: Pack multiple values into a tuple and unpack them into separate variables.
+    ```python
+    coordinates = (3, 4)
+    x, y = coordinates  # x=3, y=4
+    ```
+* **Concatenation**: Concatenate two or more tuples to create a new tuple.
+    ```python
+    new_tuple = my_tuple + (3.14, 'cherry')  # Output: (1, 2, 'apple', 'banana', 3.14, 'cherry')
+    ```
+* **Checking Membership**: Use `in` to verify the presence of an element in a tuple.
+    ```python
+    is_present = 'apple' in my_tuple  # Output: True
+    ```
+* **Multiple Return Values**: Tuples are often used to return multiple values from a function.
+    ```python
+    def get_coordinates():
+        return (3, 4)
+
+    x, y = get_coordinates()  # x=3, y=4
+    ```
+
+## Differences Between Tuples and Lists
+* Tuples and lists are both common data structures used in programming, but they have some fundamental differences that make them suitable for different purposes.
+* **Mutability:**
+  * **List**: Mutable. You can modify, add, or remove elements using methods like `append()`, `remove()`, etc.
+  * **Tuple**: Immutable. Once created, elements cannot be modified, added, or removed.
+* **Syntax:**
+  * **List**: Lists are created using square brackets `[ ]`. Elements are separated by commas (`,`).
+    ```python
+    my_list = [1, 2, 'apple', 'banana']
+    ```
+  * **Tuple**: Tuples are created using parentheses `( )`. Elements are also separated by commas (`,`).
+    ```python
+    my_tuple = (1, 2, 'apple', 'banana')
+    ```
+* **Performance:**
+  * **List**: Lists may have slightly slower performance compared to tuples because they are mutable. Modifying a list requires memory reallocation, which can be slower for large lists.
+  * **Tuple**: Tuples have better performance, especially for read-only operations, because of their immutability. They do not require memory reallocation.
+* **Use Cases:**
+  * **List**: Use when data needs to be modified or is dynamic.
+    * Example: A list of tasks that change frequently.
+  * **Tuple**: Use for fixed collections where data integrity is important.
+    * Example: Storing a fixed coordinate `(x, y)` or config values.
+* **Iteration:**
+  * **List:** You can use a for loop or other iteration methods to iterate over the elements of a list.
+      ```python
+      for item in my_list:
+          # Process each item
+      ```
+  * **Tuple:** You can iterate over the elements of a tuple in the same way as lists using a for loop.
+      ```python
+      for item in my_tuple:
+          # Process each item
+      ```
+* **Memory Usage:**
+  * **List**: Lists generally consume more memory than tuples because they need to store additional information to support their mutability.
+  * **Tuple**: Tuples consume less memory because they are immutable, and the interpreter can optimize memory usage.
