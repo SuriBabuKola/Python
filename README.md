@@ -82,7 +82,7 @@
    * **Escape sequences:** Special characters like newline (\n), tab (\t), and others are represented using escape sequences.
    * **String methods:** Python provides many built-in methods for string manipulation, such as `split()`, `join()`, and `startswith()`.
 
-## Numberic Data Type
+## Numeric Data Type
 1. **Numeric Data Types in Python (int, float):**
    * Python supports two primary numeric data types: **int** for integers and **float** for floating-point numbers.
    * Integers are whole numbers, and floats can represent both whole and fractional numbers.
@@ -1774,3 +1774,82 @@
       * This infinite loop checks the health of a service at regular intervals (every 30 seconds in this case).
       * If the service is unhealthy (`check_service_health` returns false), the script triggers a service restart (`restart_service`).
       * The loop ensures continuous monitoring without manual intervention.
+
+
+# Write a Program to List Files in Folders
+* To write a program in Python, we need to understand the inputs and the expected output from the program.
+  * `Input:` List of Folder Names
+  * `Output:` Print all Files in provided Folders
+* Steps:
+  * Read Inputs from User (Folders)
+  * Use `for` loop for Folders to list Files
+  * Identify the Modules required for the Program
+  * Print Files
+  * Identify for any known Errors
+* Write a Program to list files in folders:
+    ```python
+    import os
+
+    def list_files_in_folder(folder_path):
+        try:
+            files = os.listdir(folder_path)
+            return files, None
+        except FileNotFoundError:
+            return None, "Folder Not Found!"
+        except PermissionError:
+            return None, "Permission Denied"
+    
+    def main():
+        folder_paths = input("Provide List of Folders Seperated by Spaces: ").split()
+
+        for folder_path in folder_paths:
+            files, error_message = list_files_in_folder(folder_path)
+            if files:
+                print(f"Files in {folder_path}:")
+                for file in files:
+                    print(file)
+            else:
+                print(f"Error in {folder_path}: {error_message}")
+    
+    if __name__ == "__main__":
+        main()
+    ```
+* **Explanation:**
+  1. **Importing the `os` Module**
+       * The script imports the `os` module, which allows interacting with the operating system to perform tasks such as listing files and accessing directories.
+  2. **`list_files_in_folder` Function**
+      * **Purpose**: This function takes a folder path as input and attempts to list all files in that folder, returning results along with error handling.
+      * **Parameters**:
+        * `folder_path`: A string that specifies the path of the folder to check.
+      * **Function Logic**:
+        * **Try Block**:
+          1. `os.listdir(folder_path)` is called to list all files and subdirectories in the given folder.
+          2. If successful: Returns a tuple containing:
+               * `files`: A list of files and directories in the folder.
+               * `None`: Indicates no error occurred.
+        * **Except Block**:
+          * Catches two specific errors:
+            1. **`FileNotFoundError`**: Triggered when the folder does not exist. Returns:
+                 * `None` (no files).
+                 * `"File Not Found!"` as the error message.
+            2. **`PermissionError`**: Triggered when the program lacks permission to access the folder. Returns:
+                 * `None` (no files).
+                 * `"Permission Denied"` as the error message.
+  3. **`main` Function**
+     * **Purpose**: Handles user input, processes folder paths, and displays results or errors for each folder.
+     * **Steps**:
+       1. **User Input**:
+          * `input("Provide List of Folders Separated by Spaces: ")`: Prompts the user to enter multiple folder paths separated by spaces.
+          * `.split()`: Splits the input string into a list of folder paths.
+       2. **Processing Folder Paths**:
+          * Iterates through each folder path in the list using a `for` loop.
+          * Calls the `list_files_in_folder(folder_path)` function for each path:
+            1. **If Files Are Found**:
+                 * Prints the folder path.
+                 * Lists all files in the folder by iterating through the `files` list.
+            2. **If an Error Occurs**:
+                 * Prints the folder path along with the corresponding error message (`"File Not Found!"` or `"Permission Denied"`).
+  4. **Entry Point**
+     * **`if __name__ == "__main__":`**
+       * Ensures the `main` function is only executed when the script is run directly (not when imported as a module).
+  ![preview](./Images/Python34.png)
