@@ -1776,11 +1776,314 @@
       * The loop ensures continuous monitoring without manual intervention.
 
 
-# Write a Program to List Files in Folders
+# Dictionary
+* A Dictionary in Python is a data structure that allows you to store and retrieve values using keys.
+* It is also known as a hashmap or associative array in other programming languages.
+* Dictionaries are implemented as hash tables, providing fast access to values based on their keys.
+* It stores data as **key-value pairs**. Keys are unique, and each key points to a specific value.
+    ```python
+    my_dict = {'name': 'John', 'age': 25, 'city': 'New York'}
+    ```
+  * `'name'` is the **key**, `'John'` is the **value**.
+* **Create a Dictionary**
+  * Create a dictionary using curly braces `{}`.
+      ```python
+      my_dict = {'name': 'Alice', 'age': 30}
+      ```
+  * Can also create an empty dictionary and add items later:
+      ```python
+      my_dict = {}
+      my_dict['color'] = 'blue'
+      ```
+* **Accessing Values**
+  * Can get a value by using its key:
+      ```python
+      print(my_dict['name'])  # Output: Alice
+      ```
+    * If the key doesn’t exist, it will throw an error.
+* **Adding or Changing Values**
+  * Can add a new key-value pair or change an existing value.
+      ```python
+      my_dict['age'] = 31  # Updates the age
+      my_dict['job'] = 'Teacher'  # Adds a new key-value pair
+      ```
+    * Result:
+        ```python
+        {'name': 'Alice', 'age': 31, 'job': 'Teacher'}
+        ```
+* **Removing Items**
+  * Use `del` to remove a key-value pair:
+      ```python
+      del my_dict['job']
+      ```
+    * After removing:
+        ```python
+        {'name': 'Alice', 'age': 31}
+        ```
+* **Check if a Key Exists**
+  * To check if a key is in the dictionary:
+      ```python
+      if 'age' in my_dict:
+          print('Age is in the dictionary')
+      ```
+* **Looping Through a Dictionary**
+  * Can loop through both keys and values using `items()`
+      ```python
+      for key, value in my_dict.items():
+          print(f"{key}: {value}")
+      ```
+    * Output:
+        ```
+        name: Alice
+        age: 31
+        ```
+* **Other Useful Dictionary Methods**
+  * **`get()`**: Avoids errors when a key doesn’t exist.
+      ```python
+      print(my_dict.get('name'))  # Output: Alice
+      print(my_dict.get('salary'))  # Output: None
+      ```
+  * **`update()`**: Adds or updates multiple key-value pairs at once.
+      ```python
+      my_dict.update({'city': 'Paris', 'age': 32})
+      ```
+  * **`pop()`**: Removes a key and returns its value.
+      ```python
+      removed = my_dict.pop('age')
+      print(removed)  # Output: 32
+      ```
+  * **`clear()`**: Empties the dictionary.
+    ```python
+    my_dict.clear()
+    ```
+
+## Nested Dictionaries
+* A dictionary can contain another dictionary. This is called a nested dictionary.
+* **Example:**
+    ```python
+    students = {
+        'student1': {'name': 'Alice', 'age': 25},
+        'student2': {'name': 'Bob', 'age': 22}
+    }
+    ```
+  * To access Bob’s age:
+      ```python
+      print(students['student2']['age'])  # Output: 22
+      ```
+
+## List Dictionaries
+* A list of dictionaries is a collection in Python where each element in the list is a dictionary.
+* It combines the functionality of lists and dictionaries. Lists allow you to store multiple items in an ordered manner, while dictionaries store key-value pairs.
+* **Example-1:**
+    ```python
+    my_list_of_dicts = [
+        {'name': 'Alice', 'age': 30},
+        {'name': 'Bob', 'age': 25},
+        {'name': 'Charlie', 'age': 35}
+    ]
+
+    # Access the first dictionary
+    first_person = my_list_of_dicts[0]
+    print(first_person)  # Output: {'name': 'Alice', 'age': 30}
+
+    # Access the 'name' value of the second dictionary
+    second_person_name = my_list_of_dicts[1]['name']
+    print(second_person_name)  # Output: Bob
+    ```
+* **Example-2:**
+    ```python
+    my_dict = [
+        {'name': 'Alice', 'age': 30},
+        {'name': 'Ram', 'age': 30},
+        {'name': 'Suresh', 'age': 30},
+    ]
+
+    # Loop through each dictionary in the list
+    for person in my_dict:
+        if person['name'] == 'Suresh':  # Check if the name is 'Suresh'
+            print(person['age'])  # Print the age
+    ```
+  * Output:
+      ```
+      30
+      ```
+  * If you're sure the structure won't change, and you know the position of `Suresh` in the list (like he's always the 3rd person), you can directly access it like this:
+      ```python
+      print(my_dict[2]['age'])  # Output: 30
+      ```
+
+## Practice Example
+### Managing a Dictionary of Server Configurations
+* **Scenario:** Suppose you are managing server configurations using a dictionary where each server has an IP address, a port, and a status.
+    ```python
+    # Server configurations dictionary
+    server_config = {
+        'server1': {'ip': '192.168.1.1', 'port': 8080, 'status': 'active'},
+        'server2': {'ip': '192.168.1.2', 'port': 8000, 'status': 'inactive'},
+        'server3': {'ip': '192.168.1.3', 'port': 9000, 'status': 'active'}
+    }
+
+    # Retrieving information
+    def get_server_status(server_name):
+        return server_config.get(server_name, {}).get('status', 'Server not found')
+
+    # Example usage
+    server_name = 'server2'
+    status = get_server_status(server_name)
+    print(f"{server_name} status: {status}")
+    ```
+* **Explanation:**
+  1. **Defining the Server Configuration Dictionary**
+       * This dictionary **stores configurations of multiple servers**, with each server name (`server1`, `server2`, `server3`) as a key.
+      * Each server has an **inner dictionary** containing:
+        * `'ip'`: The IP address of the server (e.g., `'192.168.1.1'`).  
+        * `'port'`: The port number on which the server is running (e.g., `8080`).  
+        * `'status'`: A string indicating whether the server is `"active"` or `"inactive"`.  
+  2. **Function to Retrieve Server Status**
+      * **Purpose:** This function retrieves the status of a given server name.  
+      * **How it works:**  
+        * Uses `server_config.get(server_name, {})`:  
+          * If `server_name` exists in `server_config`, it returns the corresponding dictionary (e.g., `{'ip': '192.168.1.2', 'port': 8000, 'status': 'inactive'}`).  
+          * If the `server_name` does **not exist**, it returns an **empty dictionary (`{}`)** instead of raising a `KeyError`.  
+        * Calls `.get('status', 'Server not found')` on the returned dictionary:  
+          * If the `status` key exists, it returns the status (`'active'` or `'inactive'`).  
+          * If the `status` key is **not found**, it returns `'Server not found'`.  
+  3. **Example Usage: Fetching and Printing Server Status**  
+      * Assigns `'server2'` to `server_name`.  
+      * Calls `get_server_status('server2')`:  
+        * Retrieves `'inactive'` because `server2` exists in `server_config` with `'status': 'inactive'`.  
+      * Prints the result:  
+          ```
+          server2 status: inactive
+          ```
+
+
+# Sets and Set Operations in Python
+* A **set** in Python is a collection of unique, unordered elements.
+* Sets are useful for operations such as finding the union, intersection, or difference between different sets.
+* Since sets do not allow duplicates, they help you ensure that only unique values are stored.
+* **Creating a Set:**
+  * You can create a set by placing elements inside curly braces `{}`. The elements in a set are unordered, meaning they don't have a specific position.
+      ```python
+      my_set = {1, 2, 3, 4, 5}
+      ```
+* **Adding and Removing Elements:**
+  * **Adding elements** to a set: Use the `add()` method.
+  * **Removing elements** from a set: Use the `remove()` method (raises an error if the element is not found) or `discard()` (which doesn't raise an error).
+      ```python
+      my_set.add(6)  # Adding an element to the set
+      print(my_set)  # Output: {1, 2, 3, 4, 5, 6}
+
+      my_set.remove(3)  # Removing the element 3
+      print(my_set)  # Output: {1, 2, 4, 5, 6}
+      ```
+* **Set Operations:**
+  * **Union:** The **union** of two sets returns a new set with all the unique elements from both sets.
+      ```python
+      set1 = {1, 2, 3, 4}
+      set2 = {3, 4, 5, 6}
+
+      union_set = set1.union(set2)  # Union of sets
+      print(union_set)  # Output: {1, 2, 3, 4, 5, 6}
+      ```
+  * **Intersection:** The **intersection** of two sets returns a new set with only the elements that are present in both sets.
+      ```python
+      intersection_set = set1.intersection(set2)  # Intersection of sets
+      print(intersection_set)  # Output: {3, 4}
+      ```
+  * **Difference:** The **difference** of two sets returns a new set with elements that are in the first set but not in the second.
+      ```python
+      difference_set = set1.difference(set2)  # Difference of sets
+      print(difference_set)  # Output: {1, 2}
+      ```
+* **Subset and Superset:**
+  * **Subset:** A set is a **subset** of another set if all its elements are contained in the other set.
+      ```python
+      is_subset = set1.issubset(set2)  # Checking if set1 is a subset of set2
+      print(is_subset)  # Output: False
+      ```
+  * **Superset:** A set is a **superset** of another set if it contains all elements of the other set.
+      ```python
+      is_superset = set1.issuperset(set2)  # Checking if set1 is a superset of set2
+      print(is_superset)  # Output: False
+      ```
+
+## Lists `vs.` Sets in Python
+### **Lists**
+* **Ordered Collection:**
+  * Lists maintain the order in which elements are added.
+  * Elements can be accessed by their index.
+      ```python
+      my_list = [1, 2, 3, 4, 5]
+      print(my_list[0])  # Output: 1
+      ```
+* **Mutable:**
+  * Lists are mutable, meaning you can modify their elements after creation.
+      ```python
+      my_list[1] = 10
+      ```
+* **Allows Duplicate Elements:**
+  * Lists can contain duplicate elements.
+      ```python
+      my_list = [1, 2, 2, 3, 4]
+      ```
+* **Use Cases:**
+  * You need an ordered collection.
+  * You want the ability to modify elements.
+  * You need to allow duplicate values.
+### **Sets**
+* **Unordered Collection:**
+  * Sets do not maintain the order of elements.
+  * Elements cannot be accessed by index.
+      ```python
+      my_set = {1, 2, 3, 4, 5}
+      ```
+* **Mutable:**
+  * Sets allow adding and removing elements after creation.
+      ```python
+      my_set.add(6)
+      ```
+* **No Duplicate Elements:**
+  * Sets do not allow duplicate elements.
+  * If a duplicate is added, it is ignored without an error.
+      ```python
+      my_set = {1, 2, 2, 3, 4}  # Results in {1, 2, 3, 4}
+      ```
+* **Use Cases:**
+  * Order does not matter.
+  * You need a collection of unique elements.
+  * You want to perform set operations like union, intersection, or difference.
+### **Common Operations: Lists vs. Sets**
+| Operation               | Lists                           | Sets                            |
+| ----------------------- | ------------------------------- | ------------------------------- |
+| **Adding Elements**     | `append()` or `insert()`        | `add()`                         |
+| **Removing Elements**   | `remove()`, `pop()`, `del`      | `remove()`, `discard()`         |
+| **Checking Membership** | `in` operator (O(n) complexity) | `in` operator (O(1) complexity) |
+   ```python
+   # Lists
+   if 3 in my_list:
+       print("3 is in the list")
+   # Sets
+   if 3 in my_set:
+       print("3 is in the set")
+   ```
+### **Choosing Between Lists and Sets**
+* **Use Lists When:**
+  * You need to maintain element order.
+  * Duplicate elements are allowed.
+  * You need to access elements by index.
+* **Use Sets When:**
+  * Order is not important.
+  * You need a unique collection of elements.
+  * You need efficient set operations (union, intersection, difference).
+
+
+# Programs
+## Write a Program to List Files in Folders
 * To write a program in Python, we need to understand the inputs and the expected output from the program.
   * `Input:` List of Folder Names
   * `Output:` Print all Files in provided Folders
-* Steps:
+* **Steps:**
   * Read Inputs from User (Folders)
   * Use `for` loop for Folders to list Files
   * Identify the Modules required for the Program
@@ -1853,3 +2156,57 @@
      * **`if __name__ == "__main__":`**
        * Ensures the `main` function is only executed when the script is run directly (not when imported as a module).
   ![preview](./Images/Python34.png)
+
+## Details of Users who created Pull requests(Active) on Kubernetes Github Repo
+* **Steps:**
+  * Identify Module (`requests` module)
+  * To call GitHub Pull Requests, we are using API's
+    * Search in Google for `github api docs`
+    * [Refer Here](https://docs.github.com/en/rest?apiVersion=2022-11-28) for Official site
+    * In that Choose `Pull requests` and select `List pull requests`
+    * Use Request example URL `https://api.github.com/repos/{owner}/{repo}/pulls`
+  * Convert JSON to Dictionary
+  * Print the Values
+* Write a Program:
+    ```python
+    import requests
+
+    url = "https://api.github.com/repos/kubernetes/kubernetes/pulls"
+
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        pull_requests = response.json()
+
+        pr_creators_list = {}
+
+        for pull in pull_requests:
+            creator = pull["user"]["login"]
+            if creator in pr_creators_list:
+                pr_creators_list[creator] += 1
+            else:
+                pr_creators_list[creator] = 1
+
+        print("PR Creators and Counts: ")
+
+        for creator, count in pr_creators_list.items():
+            print(f"{creator}: {count} PRs")
+    else:
+        print("Failed to fetch Data. Status Code: ", response.status_code)
+    ```
+* **Explanation:**
+  * **Imports `requests` module** – Used for making HTTP requests.
+  * **Defines GitHub API URL** – Specifies the API endpoint to fetch open pull requests from the Kubernetes repository.
+  * **Sends an HTTP GET request** – Retrieves PR data from GitHub using `requests.get(url)`.
+  * **Checks response status (`200`)** – Ensures the request was successful before processing data.
+  * **Parses JSON response** – Converts API response from JSON format to a Python dictionary using `response.json()`.
+  * **Initializes an empty dictionary (`pr_creators_list`)** – Creates an empty dictionary to store PR creators and their PR counts.
+  * **Loops through each pull request in the list** – Iterates over all PRs retrieved from the API.
+  * **Extracts the username of the PR creator (`pull["user"]["login"]`)** – Retrieves the GitHub username of the PR creator.
+  * **Updates the dictionary:**
+    * If the creator is already in the dictionary, it increments their PR count.
+    * If not, it adds the creator to the dictionary with a count of `1`.
+  * **Prints header message** – Displays `"PR Creators and Counts:"` before listing results.
+  * **Iterates over the dictionary to print results:**
+    * Loops through `pr_creators_list.items()` to print each creator’s name and PR count.
+  * **Handles API failure** – If the request fails, prints an error message along with the status code.
