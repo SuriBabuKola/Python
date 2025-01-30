@@ -20,3 +20,5 @@ if response.status_code == 200:
 
     for creator, count in pr_creators_list.items():
         print(f"{creator}: {count} PRs")
+else:
+    print("Failed to fetch Data. Status Code: ", response.status_code)
