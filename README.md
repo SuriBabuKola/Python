@@ -2078,6 +2078,124 @@
   * You need efficient set operations (union, intersection, difference).
 
 
+# File Operations in Python
+* File operations in Python allow you to read, write, append, and manage files efficiently. Python provides built-in functions to handle files in both text and binary formats.
+* **Opening a File**
+    ```python
+    file = open("example.txt", "r")  # Opens file in read mode
+    ```
+    * `"r"` → Read mode (default)  
+    * `"w"` → Write mode (overwrites file)  
+    * `"a"` → Append mode (adds content to file)  
+    * `"x"` → Create mode (fails if file exists)  
+    * `"b"` → Binary mode (for images, PDFs, etc.)  
+* **Reading from a File**  
+  * **Using `read()`** – Reads the entire file
+      ```python
+      with open("example.txt", "r") as file:
+          content = file.read()
+          print(content)  # Prints whole file content
+      ```
+  * **Using `readline()`** – Reads one line at a time
+      ```python
+      with open("example.txt", "r") as file:
+          line = file.readline()
+          print(line)  # Prints only the first line
+      ```
+  * **Using `readlines()`** – Reads all lines into a list
+      ```python
+      with open("example.txt", "r") as file:
+          lines = file.readlines()
+          for line in lines:
+              print(line.strip())  # Removes extra newline characters
+      ```
+* **Writing to a File**  
+    ```python
+    with open("example.txt", "w") as file:
+        file.write("Hello, World!\n")
+        file.write("Python file handling is easy.\n")
+    ```
+    * **Note:** Writing (`"w"`) will overwrite existing content.
+* **Appending to a File**  
+    ```python
+    with open("example.txt", "a") as file:
+        file.write("Appending a new line!\n")
+    ```
+    * **Note:** `"a"` mode adds content without deleting previous data.
+
+## Practice Example
+### Copying Content from One File to Another
+* Program:
+    ```python
+    with open("source.txt", "r") as source, open("destination.txt", "w") as dest:
+        for line in source:
+            dest.write(line)
+    print("File copied successfully!")
+    ```
+* **Explanation:**
+  * **`with open("source.txt", "r") as source, open("destination.txt", "w") as dest:`**
+    * `open("source.txt", "r")` → Opens `source.txt` in **read (`"r"`) mode**.
+    * `open("destination.txt", "w")` → Opens (or creates) `destination.txt` in **write (`"w"`) mode**.
+    * The `with` statement ensures that both files are **automatically closed** after execution.
+  * **`for line in source:`**
+    * Iterates **line-by-line** through `source.txt`.
+  * **`dest.write(line)`**
+    * Writes each line from `source.txt` into `destination.txt`.
+  * **`print("File copied successfully!")`**
+    * Displays a confirmation message when the copying is complete.
+### We have a `server.conf` file, in that we want to increase `Max_Connections`
+* `server.conf:`
+    ```bash
+    # Network Settings
+    PORT = 8080
+    MAX_CONNECTIONS = 200
+    TIMEOUT = 30
+
+    # Security Settings
+    SSL_ENABLED = true
+    SSL_CERT = /path/to/certificate.pem
+
+    # Logging Settings
+    LOG_LEVEL = INFO
+    LOG_FILE = /var/log/server.log
+
+    # Other Settings
+    ENABLE_FEATURE_X = true
+    ```
+    * In the `server.conf` file, need to increase `MAX_CONNECTIONS` to `1000`
+* Program:
+    ```python
+    def update_config_list(filepath, key, value):
+        with open(filepath, "r") as file:
+            file_lines = file.readlines()
+        with open(filepath, "w") as file:
+            for line in file_lines:
+                if key in line:
+                    file.write(key + " = " + value + "\n")
+                else:
+                    file.write(line)
+
+    update_config_list("server.conf", "MAX_CONNECTIONS", "1000")
+    ```
+* **Explanation:**
+  * **Function Definition:**
+    * `filepath`: Path to the configuration file (e.g., `"server.conf"`).
+    * `key`: The configuration key to update (e.g., `"MAX_CONNECTIONS"`).
+    * `value`: The new value to assign to the key (e.g., `"1000"`).
+  * **Read the File Contents:**
+    * Opens the file in **read mode (`"r"`)**.
+    * Reads **all lines** into a list (`file_lines`).
+    * Each line is stored as a string in the list.
+  * **Write the Updated Content Back to the File:**
+    * Opens the same file in **write mode (`"w"`)**, which **overwrites the existing file**.
+  * **Loop Through Each Line:**
+    * Iterates through the **original file line by line**.
+  * **Check and Update the Key:**
+    * If the **key exists** in the line, replace it with the new value and write the updated line.
+    * Otherwise, write the original line **unchanged**.
+  ![preview](./Images/Python35.png)
+
+
 # Programs
 ## Write a Program to List Files in Folders
 * To write a program in Python, we need to understand the inputs and the expected output from the program.
