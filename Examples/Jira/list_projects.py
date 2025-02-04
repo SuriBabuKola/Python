@@ -4,9 +4,12 @@ import requests
 from requests.auth import HTTPBasicAuth
 import json
 
-url = "https://your-domain.atlassian.net/rest/api/3/project"
+url = "https://nagasuribabu.atlassian.net/rest/api/3/project"
 
-auth = HTTPBasicAuth("email@example.com", "<api_token>")
+email = "nagasuribabu.k@gmail.com"
+api_token = "<api_token>"
+
+auth = HTTPBasicAuth(email, api_token)
 
 headers = {
   "Accept": "application/json"
@@ -19,4 +22,8 @@ response = requests.request(
    auth=auth
 )
 
-print(json.dumps(json.loads(response.text), sort_keys=True, indent=4, separators=(",", ": ")))
+output = json.loads(response.text)
+
+print("Project Names:")
+for project in output:
+    print(f" - {project["name"]}")
