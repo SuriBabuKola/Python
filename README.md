@@ -132,7 +132,7 @@
     print("LowerCase:", lowercase)
     print("UpperCase:", uppercase)
     ```
-  * Easily convert a string to lowercase or uppercase using the built-in string methods l`ower()` and `upper()`, respectively
+  * Easily convert a string to lowercase or uppercase using the built-in string methods `lower()` and `upper()`, respectively
   ![preview](./Images/Python6.png)
 * **String_Replace:**
     ```python
@@ -2194,6 +2194,168 @@
     * If the **key exists** in the line, replace it with the new value and write the updated line.
     * Otherwise, write the original line **unchanged**.
   ![preview](./Images/Python35.png)
+
+
+# Boto3
+* Boto3 is the **AWS SDK (Software Development Kit) for Python**, allowing developers to interact with **Amazon Web Services (AWS)** using Python scripts.
+* It provides an easy-to-use API for managing AWS services such as **EC2, S3, RDS, Lambda, IAM, DynamoDB, and more**.
+* **Uses of Boto3 in Python:**
+  1. **Managing AWS Resources** – Automating infrastructure tasks like launching EC2 instances, managing S3 buckets, and handling IAM roles.
+  2. **Interacting with AWS Services** – Reading/writing data in S3, querying DynamoDB, invoking Lambda functions, etc.
+  3. **Automation & DevOps** – Writing Python scripts for CI/CD, auto-scaling, backups, and security monitoring.
+  4. **Machine Learning & Data Processing** – Fetching training data from S3, using SageMaker, or processing data with AWS Glue.
+* **Installation:**
+  * To use Boto3, install it via pip:
+      ```bash
+      pip install boto3
+      ```
+* **Example:** Using Boto3 to List S3 Buckets
+    ```python
+    import boto3
+
+    # Create an S3 client
+    s3 = boto3.client('s3')
+
+    # List all buckets
+    response = s3.list_buckets()
+
+    # Print bucket names
+    for bucket in response['Buckets']:
+        print(bucket['Name'])
+    ```
+* **To use Boto3 for AWS:**
+  * Install and Configure AWS CLI
+  * Install AWS CLI in GitHub Codespace:
+    * Go to Search, use `>dev` and Choose `Add Dev Container Configuration Files..`
+    * Choose `Modify your active configuration...` and In Popup, click `Rebuild Now`
+    * In Select Features, search for `AWS CLI` and choose `AWS CLI devcontainer`, click `OK`
+    * In Popup, click `Rebuild Now`
+    * Then check `aws version` and Configure AWS CLI.
+
+## Practice Examples
+### Write a Python Program to Create S3 Bucket in AWS
+* Install and Configure AWS CLI
+* Install Boto3: `pip install boto3`
+* **Steps to use Boto3 Documentation:**
+  * [Refer Here](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) for Boto3 Official docs
+  * Click `Available Services` and Choose required Resource (`S3`)
+    * Use:
+      ```python
+      import boto3
+
+      client = boto3.client('s3')
+      ```
+  * In that Resource, We have available methods and Choose required Method (`create_bucket`)
+  * We can directly use `Request Syntax`, in that check `Parameters` which are Required and Use them.
+* Program:
+    ```python
+    import boto3
+
+    client = boto3.client('s3')
+
+    response = client.create_bucket(
+        Bucket='demo-s3-bucket-using-boto3',
+    )
+
+    print("Bucket created successfully:", response)
+    ```
+  ![preview](./Images/Python36.png)
+* **Explanation:**
+  * Code will **only work if your default AWS region is `us-east-1`**. Here's what happens step by step:
+    1. **Creates an S3 Client:**
+       * `boto3.client('s3')` initializes a connection to AWS S3 using your default AWS credentials and region.  
+    2. **Sends a Request to Create an S3 Bucket:**
+       * The `create_bucket` function is called to create a bucket named **"demo-s3-bucket-using-boto3"**.  
+    3. **No Region is Specified:**
+       * Since you did not provide a region, AWS will try to create the bucket in **`us-east-1` (default region)**.  
+       * If your AWS CLI is set to another region (e.g., `ap-south-1` or `eu-west-1`), **the request will fail** with an `IllegalLocationConstraintException`.
+    4. **Prints Confirmation**  
+       * If the bucket is successfully created, a success message is printed.
+### AWS Cloud Cost Optimization - Identifying Stale Resources (Identifying Stale EBS Snapshots)
+* In this example, we'll create a Lambda function that identifies EBS snapshots that are no longer associated with any active EC2 instance and deletes them to save on storage costs.
+* We create Lambda Function using Python.
+* **Steps:**
+  * Install and Configure AWS CLI
+  * Install Boto3: `pip install boto3`
+  * **Steps to use Boto3 Documentation:**
+    * [Refer Here](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) for Boto3 Official docs
+    * Click `Available Services` and Choose required Resource
+    * In that Resource, We have available methods and Choose required Method
+    * We can directly use `Request Syntax`, in that check `Parameters` which are Required and Use them.
+* **Requirements for this Example:**
+  * Create an EC2 Instance
+  * Create a Snapshot for that EC2 Instance Volume
+  * Create a Lambda Function using below Python Code
+* Program:
+    ```python
+    import boto3
+
+    def lambda_handler(event, context):
+        client = boto3.client('ec2')
+
+        # Get all snapshots owned by me
+        response = client.describe_snapshots(OwnerIds=['self'])
+
+        # Get all active Instance IDs
+        instances = client.describe_instances(Filters=[{'Name': 'instance-state-name', 'Values': ['running']}])
+        active_instance_ids = set()
+
+        for reservation in instances['Reservations']:
+            for instance in reservation['Instances']:
+                active_instance_ids.add(instance['InstanceId'])
+
+        # Interact with each snapshot and delete if it is not associated with any active instance
+        for snapshot in response['Snapshots']:
+            snapshot_id = snapshot['SnapshotId']
+            volume_id = snapshot.get('VolumeId')
+
+            if not volume_id:
+                # Delete snapshot if it is not associated with any volume
+                client.delete_snapshot(SnapshotId=snapshot_id)
+                print(f"Deleted snapshot {snapshot_id} as it is not associated with any volume")
+
+            else:
+                # Check if the volume still exists
+                try:
+                    volume_response = client.describe_volumes(VolumeIds=[volume_id])
+                    if not volume_response['Volumes'][0]['Attachments']:
+                        client.delete_snapshot(SnapshotId=snapshot_id)
+                        print(f"Deleted snapshot {snapshot_id} as it was taken from a volume not attached to any instance")
+
+                except client.exceptions.ClientError as e:
+                    if e.response['Error']['Code'] == 'InvalidVolume.NotFound':
+                        client.delete_snapshot(SnapshotId=snapshot_id)
+                        print(f"Deleted snapshot {snapshot_id} as the volume associated with it no longer exists")
+    ```
+* **Explanation:**
+  * The `boto3.client('ec2')` creates a connection to AWS EC2.
+  * The `describe_snapshots(OwnerIds=['self'])` function fetches all snapshots owned by your AWS account
+  * The `describe_instances(Filters=[{'Name': 'instance-state-name', 'Values': ['running']}])` function retrieves a list of currently running EC2 instances.
+  * The script loops through the instance details and stores their instance IDs in a set called `active_instance_ids`.
+  * For each snapshot, the script checks if it is linked to a volume.
+  * If a snapshot has no associated volume, it is deleted using `delete_snapshot(SnapshotId=snapshot_id)`.
+  * If the snapshot has a volume, the script checks whether the volume is attached to any instance.
+  * If the volume is not attached to any instance, the snapshot is deleted.
+  * If AWS returns an error saying the volume does not exist (`InvalidVolume.NotFound`), the snapshot is deleted.
+* Go to Lambda Function
+  * Add above Program in Code and click `Deploy` & `Test`
+  * But the execution fails due to timeout and Permissions issues.
+  * Go to Lambda Function `Configuration`
+    * In `General configuration`, increase `Timeout` to `10 Seconds`
+    * In `Permissions`, click on `Role name` and it opens that Role
+      * In that `Permissions`, click `Add permissions` and select `Create inline policy`
+      * Choose `EC2` and add below Policies
+        * `DescribeSnapshots`
+        * `DeleteSnapshot`
+        * `DescribeInstances`
+        * `DescribeVolumes`
+      * Create Policy and Attach to it.
+  * Then `Test` the Code.
+* **Code Execution:**
+  * The snapshots are not deleted as long as instances are running.
+  ![preview](./Images/Python37.png)
+  * The snapshots are deleted when the volumes are not attached to any running instances and the volumes do not exist.
+  ![preview](./Images/Python38.png)
 
 
 # Programs
