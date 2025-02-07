@@ -3,7 +3,7 @@
 import requests
 from requests.auth import HTTPBasicAuth
 import json
-from flask import Flask
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -22,43 +22,49 @@ def create_jira_ticket():
       "Content-Type": "application/json"
     }
 
-    payload = json.dumps( {
-      "fields": {
-        "description": {
-          "content": [
-            {
+    data = request.get_json()
+
+    comment = data.get("comment", {}).get("body", "")
+
+    if "/jira" in comment:
+        payload = json.dumps( {
+          "fields": {
+            "description": {
               "content": [
                 {
-                  "text": "This is my first Ticket created in SampleScrumProject.",
-                  "type": "text"
+                  "content": [
+                    {
+                      "text": "This is my first Ticket created in SampleScrumProject.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
                 }
               ],
-              "type": "paragraph"
-            }
-          ],
-          "type": "doc",
-          "version": 1
-        },
-        "issuetype": {
-          "id": "10024"
-        },
-        "project": {
-          "key": "SSP"
-        },
-        "summary": "My first Jira Ticket",
-      },
-      "update": {}
-    } )
+              "type": "doc",
+              "version": 1
+            },
+            "issuetype": {
+              "id": "10024"
+            },
+            "project": {
+              "key": "SSP"
+            },
+            "summary": "My first Jira Ticket",
+          },
+          "update": {}
+        } )
 
-    response = requests.request(
-       "POST",
-       url,
-       data=payload,
-       headers=headers,
-       auth=auth
-    )
+        response = requests.request(
+           "POST",
+           url,
+           data=payload,
+           headers=headers,
+           auth=auth
+        )
 
-    return json.dumps(json.loads(response.text), sort_keys=True, indent=4, separators=(",", ": "))
+        return json.dumps(json.loads(response.text), sort_keys=True, indent=4, separators=(",", ": "))
+    return jsonify({"message": "No Jira ticket created, '/jira' not found in comment"}), 200
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)
