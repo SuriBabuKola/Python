@@ -25,8 +25,20 @@ def create_jira_ticket():
     data = request.get_json()
 
     comment = data.get("comment", {}).get("body", "")
+    issue_title = data.get("issue", {}).get("title", "No Title")
+    issue_body = data.get("issue", {}).get("body", "No Description")
+    issue_url = data.get("issue", {}).get("html_url", "")
+    commenter = data.get("comment", {}).get("user", {}).get("login", "Unknown User")
+    repository = data.get("repository", {}).get("full_name", "Unknown Repo")
 
     if "/jira" in comment:
+        jira_description = f"""
+        Issue Title: {issue_title}
+        GitHub Issue URL: {issue_url}
+        Original Description: {issue_body}
+        Comment from {commenter}: {comment}
+        """
+
         payload = json.dumps( {
           "fields": {
             "description": {
@@ -34,7 +46,7 @@ def create_jira_ticket():
                 {
                   "content": [
                     {
-                      "text": "This is my first Ticket created in SampleScrumProject.",
+                      "text": jira_description,
                       "type": "text"
                     }
                   ],
@@ -50,7 +62,7 @@ def create_jira_ticket():
             "project": {
               "key": "SSP"
             },
-            "summary": "My first Jira Ticket",
+            "summary": f"{issue_title} - {repository}",
           },
           "update": {}
         } )
