@@ -2246,7 +2246,7 @@
       client = boto3.client('s3')
       ```
   * In that Resource, We have available methods and Choose required Method (`create_bucket`)
-  * We can directly use `Request Syntax`, in that check `Parameters` which are Required and Use them.
+  * We can directly use `Request Syntax`, in that check `Parameters` which are Required, Use them and Optional Parameters are need not pass, if want provide them.
 * Program:
     ```python
     import boto3
@@ -2490,3 +2490,384 @@
   * **Iterates over the dictionary to print results:**
     * Loops through `pr_creators_list.items()` to print each creator’s name and PR count.
   * **Handles API failure** – If the request fails, prints an error message along with the status code.
+
+
+# Automate JIRA Creation on a GitHub Event using Python (Automate GitHub and Jira Integration)
+* **Problem Statement:**
+  * The QA team finds a bug in the code and raises an issue on GitHub.
+  * One of the developers checks the issues. The issues that are not valid are closed, and the valid issues are worked on by the developers.
+  * They also need to show the organization that they are working on these issues.
+  * For that, they go to Jira and create specific tickets for particular issues.
+  * It is difficult for developers to log in and create tickets for those issues.
+  * We automate this process using Python. For that, we deal with `GitHub` and `Jira`.
+    * We need to create a bridge between them so that whenever someone comments on an issue, a Jira ticket is created automatically.
+* **Process:**
+  * Write a Python Code and host it on an EC2 Instance.
+  * In GitHub, create a WebHook so that when someone comments on an issue with `/jira`, the WebHook is triggered and sends the entire data to a Python script hosted on the EC2 instance.
+  * The Python code hosted on the EC2 Instance uses that JSON data and sends a request to Jira to create a ticket for that issue.
+
+## SetUp Jira
+* [Refer Here](https://www.atlassian.com/software/jira?campaign=18442427682&adgroup=142327015872&targetid=kwd-20723783422&matchtype=e&network=g&device=c&device_model=&creative=656562805423&keyword=jira%20install&placement=&target=&ds_eid=700000001558501&ds_e1=GOOGLE&gad_source=1&gclid=Cj0KCQiAkoe9BhDYARIsAH85cDPNtVuhBM5r7zYX5kE9ept_Red84WS63zr7tdXHWGHita34c4WMTH8aAnOJEALw_wcB) for Official site.
+* SignUp with Google and click `Create your account`
+  * Give `Site Name` and click `Continue`
+  * Select required onces
+  * In `Select a template for your first project`, choose `SCRUM` and click `Next`
+  * Give `Name your project` and click `Get started`
+  * It opens Project Homepage.
+* We are interacting with Jira using APIs, for that we need to create API Token for Jira Account.
+* **Create Jira API Token:**
+    * Click on Account Name on Right Side Corner and choose `Manage account`
+    * Go to `Security`
+      * In `API tokens`, click `Create and manage API tokens`
+      * Click `Create API token`. Provide `Name`, `Expires on` and click `Create`
+      * Copy API Token and Store in Safe Place.
+* **Understand Jira API Documentation:**
+  * [Refer Here](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/) for Official docs.
+  * Search for particular one (Projects) and in that choose required one (Get all projects)
+  * Copy Python Code and make changes based on your data.
+### Practice Examples
+#### Create Project in Jira
+* Go to Jira API Documentation
+  * Search for `Projects`, in that select `Create project`
+  * Copy the Python Code into your Workplace
+* Make the Changes in the Python Code, [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/c451128af4dd7ced272dc53a3a6dddb6f038db49) for Python Code (**Changes the Python Code to Create Scrum Project**)
+  * In `url = "https://your-domain.atlassian.net/rest/api/3/project"`, provide your Jira Account URL  `url = "https://nagasuribabu.atlassian.net/rest/api/3/project"`
+  * Provide `Email` and `API-Token`
+  * Provide `"description"`, `"key"` and `"name"`
+  * Provide `"leadAccountId"`, for that
+    * Go to Jira, Click on `⚙️ (Settings)` → `User Management`
+    * In `Users`, select required User
+    * The `URL in your browser` will look something like this:  
+        ```
+        https://admin.atlassian.com/o/5eb8b5d9-638e-4fa1-9a1d-fb02075a13bf/users/712020:c03445fc-2b47-4515-9481-5c5af5f695b1
+        ```
+    * The part after `/users/` (`712020:c03445fc-2b47-4515-9481-5c5af5f695b1`) is the **leadAccountId**.
+  * Provide `"projectTypeKey": "software"` and `"projectTemplateKey": "com.pyxis.greenhopper.jira:gh-simplified-agility-scrum"` for Scrum Project
+    * [Refer Here](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-post) for Official docs.
+    * In that **Project Type Templates** shows the `Project Type Key` & `Project Template Key`.
+    * Use based on your Project.
+  * Remove remaining all Optional Payloads
+  * [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/57da258649a8f9c64e74a71b216a2ce270e4dbd2) for changeset of Python Code.
+* Execute the Code, it creates the New Project in Jira.
+  ![preview](./Images/Python39.png)
+  ![preview](./Images/Python40.png)
+#### List All Projects in Jira
+* Go to Jira API Documentation
+  * Search for `Projects`, in that select `Get all projects`
+  * Copy the Python Code into your Workplace
+* Make the Changes in the Python Code, [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/6a60db0238ddf48f907b768bba73c98d659da66f) for Python Code
+  * In `url = "https://your-domain.atlassian.net/rest/api/3/project"`, provide your Jira Account URL  `url = "https://nagasuribabu.atlassian.net/rest/api/3/project"`
+  * Provide `Email` and `API-Token`
+  * Change the Print Statement to Print individual Project Names.
+      ```python
+      output = json.loads(response.text)
+
+      print("Project Names:")
+      for project in output:
+          print(f" - {project["name"]}")
+      ```
+  * [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/1a4de133f18cef6c0fe21a0d4a122395b440e993) for the changeset of Python Code.
+* Execute the Code, it list the Project Names.
+  ![preview](./Images/Python41.png)
+#### Create Issue (or) Ticket in Jira Project
+* Go to Jira API Documentation
+  * Search for `Issues`, in that select `Create issue`
+  * Copy the Python Code into your Workplace
+* Make the Changes in the Python Code, [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/8714193abfdb5512616c96c3a691d1636926e487) for Python Code
+  * In `url = "https://your-domain.atlassian.net/rest/api/3/project"`, provide your Jira Account URL  `url = "https://nagasuribabu.atlassian.net/rest/api/3/project"`
+  * Provide `Email` and `API-Token`
+  * Go to Jira UI, during Project Isuue Creation try to findout the required fields to create Issue.
+    * Only use that required Fields in that Python code and remove remaining fields.
+  * Provide `"description"` Field, in that provide `"text"` in `"content"`
+  * Provide `"issuetype"`, in that need to pass the `issuetype Id`
+    * Go to Jira Project, Click on `⚙️ Project settings` → `Issue types`
+    * In left side, choose required `Issue Types`
+    * The `URL in your browser` will look something like this:  
+        ```
+        https://nagasuribabu.atlassian.net/jira/software/projects/SSP/settings/issuetypes/10024
+        ```
+    * The part after `/issuetypes/` (`10024`) is the **issuetype_Id**.
+  * Provide `"project"`, in that remove `id` and give `key`, pass that Project Key
+    * Go to `View all project`, in that shows the Projects & Keys
+  * Provide `"summary"`
+  * [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/f8603c53713e0167a1648de88dd424486ef9dd25) for changeset of Python Code.
+* Execute the Code, it creates the New Ticket in Jira Project.
+  ![preview](./Images/Python42.png)
+  ![preview](./Images/Python43.png)
+
+## SetUp API for Python Code using Flask
+* From a programming point of view, APIs (Application Programming Interfaces) are very important as they allow different software systems to communicate with each other and share data and functionalities.
+* **API Request Types:** APIs (Application Programming Interfaces) support different types of HTTP requests, which define the operation to be performed on the resource. The common request types are:
+  1. **GET** – Retrieves data from a server.
+      - Example: Fetching user details from `https://example.com/users/1`
+  2. **POST** – Sends data to the server to create a new resource.
+      - Example: Creating a new user with a JSON payload in `https://example.com/users`
+  3. **PUT** – Updates an existing resource by replacing it entirely.
+      - Example: Updating user details in `https://example.com/users/1`
+  4. **DELETE** – Removes a resource from the server.
+      - Example: Deleting a user at `https://example.com/users/1`
+### Flask
+* **Flask** is a lightweight and flexible **Python web framework** used for building web applications and APIs. It is designed to be **simple**, **scalable**, and **easy to use**.
+* **Example of a Flask API:**
+    ```python
+    from flask import Flask
+
+    app = Flask(__name__)
+
+    @app.route('/', methods=['GET'])
+    def hello():
+        return "Hello, World!"
+
+    if __name__ == '__main__':
+        app.run("0.0.0.0")
+    ```
+  * Create EC2 Instance
+    * Install Flask `pip install flask`
+    * Then run the above Python script, it starts a local server at `http://<Public-IP>:5000/`
+  ![preview](./Images/Python45.png)
+  ![preview](./Images/Python44.png)
+* **Explanation of the Flask Code:**
+  * This is a **basic Flask application** that runs a simple web server and returns `"Hello, World!"` when accessed.
+  1. **Importing Flask**
+      ```python
+      from flask import Flask
+      ```
+      - This imports the **Flask** class from the `flask` module.
+      - Flask is a **micro-framework** for creating web applications and APIs in Python.
+  2. **Creating a Flask App Instance**
+      ```python
+      app = Flask(__name__)
+      ```
+      - `Flask(__name__)` creates an instance of the Flask application.
+      - `__name__` is a special Python variable that represents the current module's name.
+      - This tells Flask where to look for resources like templates and static files.
+  3. **Defining a Route (URL Mapping)**
+      ```python
+      @app.route('/', methods=['GET'])
+      def hello_world():
+          return 'Hello, World!'
+      ```
+      - `@app.route('/')` → This **decorator** maps the URL `/` (root URL) to the function `hello_world()`.
+      - `methods=['GET']` → Specifies that this route only accepts **GET** requests. If a different HTTP method (like POST) is used, it will return an error.
+      - When a user visits `http://localhost:5000/`, Flask calls `hello_world()`.
+      - The function returns `'Hello, World!'`, which is displayed in the browser.
+  4. **Running the Flask App**
+      ```python
+      if __name__ == '__main__':
+          app.run("0.0.0.0")
+      ```
+      - `if __name__ == '__main__':` ensures that the script runs only when executed directly, not when imported as a module.
+      - `app.run("0.0.0.0")` starts the Flask development server.
+        - `"0.0.0.0"` means the app will be accessible from any IP address (not just `localhost`).
+        - By default, it runs on **port 5000**.
+* **How to Run the Flask App**
+  * Save the code in a file, e.g., `app.py`.
+  * Run the script:
+     ```sh
+     python app.py
+     ```
+  * Open a browser and go to:
+     ```
+     http://<IP Address>:5000/
+     ```
+    * You should see:
+      ```
+      Hello, World!
+      ```
+* **Enhancements**
+  * **Change the port (default is 5000)**
+      ```python
+      app.run(host="0.0.0.0", port=8080)
+      ```
+    - The app will now run on `http://localhost:8080/`.
+  * **Return JSON instead of plain text**
+      ```python
+      from flask import jsonify
+
+      @app.route('/')
+      def hello_world():
+          return jsonify(message="Hello, World!")
+      ```
+    - Now, it returns:
+        ```json
+        {"message": "Hello, World!"}
+        ```
+### Install Flask in a Virtual Environment
+* Using a virtual environment allows you to install packages without affecting system-wide Python.
+    ```sh
+    # Install venv if not already installed
+    sudo apt install python3-venv -y
+
+    # Create a virtual environment
+    python3 -m venv myenv
+
+    # Activate the virtual environment
+    source myenv/bin/activate
+
+    # Install Flask
+    pip install flask
+    ```
+### SetUp API for `Create_Jira_Ticket` Python Code using Flask
+* [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/f8603c53713e0167a1648de88dd424486ef9dd25) for Create Jira Ticket Python Code.
+  * In this Code,
+    * Add `from flask import Flask`
+    * Add `app = Flask(__name__)`
+    * Provide `@app.route()` block
+        ```python
+        @app.route('/createjira', methods=['POST'])
+        ```
+    * Define Function `def create_jira_ticket():` and Adjust the Code within that Function
+    * Replace `print` with `return`
+    * Then add below code outside of function
+        ```
+        if __name__ == '__main__':
+            app.run(host='0.0.0.0', port=5000)
+        ```
+* [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/fd6788c1edcc823c414ebbb7adccd608d239ded8) for changeset of Python code using Flask.
+* Execute the Python Code in VM, Copy the URL and use in GitHub Webhook.
+
+## Create a GitHub Webhook (Trigger when Comments on Issue)
+* Go to `Repo Setting` → `Webhooks` and click `Add webhook`
+  * `Payload URL` → Give Instance PublicIP or PublicDNS (Where Python Code is Running) with Port and Route (`http://13.200.243.155:8080/createjira`)
+  * `Content type` → Choose `application/json`
+  * `Which events would you like to trigger this webhook?` → Choose `Let me select individual events.` and select `Issue comments`
+  * Click `Add webhook`
+* In GitHub, whenever Someone Commented on Issue it Creates Jira Ticket automatically.
+* It creates the Jira Ticket for every Comment.
+
+## Good Practices
+### Create Jira Ticket only when Issue Comment is `/jira`
+* [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/fd6788c1edcc823c414ebbb7adccd608d239ded8) for Python code using Flask.
+* Add import: `from flask import Flask, request, jsonify`
+* In this Code, add a conditional statement for Issue Comment. Write Conditional Statement before `payload`.
+* Extract GitHub Webhook data and Write to Extract Issue Comment Field
+  * For that, go to Webhooks and Open required Webhook
+  * Choose `Recent Deliveries` and select Latest Delivery
+  * In `Request` → `Payload` shows the Webhook JSON Data
+  * Based on that JSON data, Write Fields to get relevent data.
+    ```python
+    data = request.json()
+
+    comment = data.get("comment", {}).get("body", "")
+
+    if "/jira" in comment:
+        payload = json.dumps({
+        })
+    return jsonify({"message": "No Jira ticket created, '/jira' not found in comment"}), 200
+    ```
+* **Explanation:**
+  * **`data = request.json()`**
+    * This converts the HTTP response (`response`) into a Python dictionary.
+  * **Extracting the Comment Body**
+      ```python
+      comment = data.get("comment", {}).get("body", "")
+      ```
+    * **`data.get("comment", {})`**: Retrieves the `"comment"` object from `data`. If `"comment"` doesn't exist, it returns `{}` (an empty dictionary) instead of `None`, preventing errors.
+    * **`.get("body", "")`**: Extracts the `"body"` field from the `"comment"` object. If `"body"` is missing, it returns an empty string (`""`).
+  * **Checking if `/jira` is in the Comment**
+      ```python
+      if "/jira" in comment:
+          payload = json.dumps({})
+      ```
+    * This **checks if the comment contains `"/jira"`**.
+    * If true, it initializes an **payload**
+  * **Returning a JSON Response**
+      ```python
+      return jsonify({"message": "No Jira ticket created, '/jira' not found in comment"}), 200
+      ```
+    * The `jsonify()` function converts a Python dictionary into a JSON response.
+    * If `"/jira"` is **not found**, the function returns a JSON response:
+        ```json
+        {
+          "message": "No Jira ticket created, '/jira' not found in comment"
+        }
+        ```
+    * `200` **(HTTP OK)** means the request was processed successfully, even though no Jira ticket was created.
+* [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/16d3c267944c6f8b082a99cbcebe1e287d81a15d) for the Changeset of Python Code.
+  * When Comment is `/Want explanation`, it doesn't create any Jira Ticket.
+  ![preview](./Images/Python46.png)
+  * When Comment is `/jira Critical Bug Need to Fix`, it creates the Jira Ticket.
+  ![preview](./Images/Python47.png)
+### Create Jira Ticket with GitHub Webhook Data
+* **Key Information from GitHub Webhook:**
+  * A GitHub **issue comment webhook** (triggered when someone comments on an issue) usually contains the following relevant details:
+
+    | **GitHub Webhook Field** | **Purpose in Jira** |
+    |---------------------------|----------------------|
+    | `issue.title` | Jira issue **summary** |
+    | `issue.body` | Jira issue **description** (original issue text) |
+    | `comment.body` | The **actual comment** triggering the webhook |
+    | `comment.user.login` | The **GitHub username** of the commenter |
+    | `repository.full_name` | The **repository name** where the comment was posted |
+    | `issue.html_url` | A **direct link** to the issue in GitHub |
+    | `sender.login` | Who triggered the event (optional) |
+* **Example JSON Payload from GitHub Webhook:**
+  * Here’s what the webhook payload might look like when a comment is made on a GitHub issue:
+      ```json
+      {
+        "action": "created",
+        "issue": {
+          "title": "Bug: App crashes on login",
+          "body": "Steps to reproduce:\n1. Open app\n2. Enter credentials\n3. Click login\n4. Crash occurs",
+          "html_url": "https://github.com/user/repo/issues/123"
+        },
+        "comment": {
+          "body": "/jira This issue is critical. Please fix ASAP.",
+          "user": {
+            "login": "devUser123"
+          }
+        },
+        "repository": {
+          "full_name": "user/repo"
+        },
+        "sender": {
+          "login": "devUser123"
+        }
+      }
+      ```
+* **What to Pass in the Jira Ticket?**
+  * From the webhook payload, you should **extract the following fields** for your Jira issue:
+
+    | **Jira Field** | **GitHub Data to Use** |
+    |---------------|------------------------|
+    | **Summary** | `issue.title` |
+    | **Description** | `issue.body` + `comment.body` + GitHub **issue link** |
+    | **Reporter** | `comment.user.login` |
+    | **Project Key** | Use your Jira project key (e.g., `"SSP"`) |
+    | **Issue Type** | Set to `"Bug"` or `"Task"` based on the issue |
+* **Updated Flask Code for Jira Issue Creation:**
+  * Now, modify your Flask app to extract relevant GitHub data and create a meaningful Jira ticket.
+  * Extract GitHub Webhook data and Write Extract Fields
+    * For that, go to Webhooks and Open required Webhook
+    * Choose `Recent Deliveries` and select Latest Delivery
+    * In `Request` → `Payload` shows the Webhook JSON Data
+    * Based on that JSON data, Write Fields to get relevent data.
+      ```python
+      # Extract GitHub webhook data
+      data = request.json
+  
+      # Extract relevant fields
+      issue_title = data.get('issue', {}).get('title', 'No Title')
+      issue_body = data.get('issue', {}).get('body', 'No Description')
+      issue_url = data.get('issue', {}).get('html_url', '')
+      comment = data.get('comment', {}).get('body', '')
+      commenter = data.get('comment', {}).get('user', {}).get('login', 'Unknown User')
+      repository = data.get('repository', {}).get('full_name', 'Unknown Repo')
+  
+      # Check if comment contains "/jira"
+      if "/jira" in comment:
+          jira_description = f"""
+          Issue Title: {issue_title}
+          GitHub Issue URL: {issue_url}
+          Original Description: {issue_body}
+          Comment from {commenter}: {comment}
+          """
+  
+          # Jira issue payload
+          payload = json.dumps({
+          })
+      return jsonify({"message": "No Jira ticket created, '/jira' not found in comment"}), 200
+      ```
+* [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/57f0fb2a7562127d1cd495587f8d597bf2429145) for the Changeset of Python Code.
+  * When comment is `/jira`, it create a meaningful Jira ticket with GitHub Webhook Data.
+    ![preview](./Images/Python48.png)
