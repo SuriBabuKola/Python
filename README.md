@@ -2871,3 +2871,203 @@
 * [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/57f0fb2a7562127d1cd495587f8d597bf2429145) for the Changeset of Python Code.
   * When comment is `/jira`, it create a meaningful Jira ticket with GitHub Webhook Data.
     ![preview](./Images/Python48.png)
+
+
+# Python Decorators
+* A **decorator** is a function that modifies the behavior of another function or method without changing its code. It allows adding functionality dynamically.
+* Decorators are commonly used for:
+  - **Logging**
+  - **Authentication**
+  - **Caching**
+  - **Timing functions**
+  - **Access control**
+* **Basic Decorator Example:**
+  * A simple decorator that logs when a function is called.
+      ```python
+      def my_decorator(func):
+          def wrapper():
+              print("Something is happening before the function is called.")
+              func()
+              print("Something is happening after the function is called.")
+          return wrapper
+
+      @my_decorator
+      def say_hello():
+          print("Hello, World!")
+
+      say_hello()
+      ```
+  * **Explanation:**
+    1. **Defining the Decorator Function**
+         - `my_decorator(func)`: This function **accepts another function** (`func`) as an argument.
+         - `wrapper()`: This is a nested function that:
+            1. Prints a message **before** calling `func()`.
+            2. Calls `func()`, executing the original function.
+            3. Prints a message **after** calling `func()`.
+         - `return wrapper`: Returns the `wrapper()` function, replacing the original function with the modified behavior.
+    2. **Applying the Decorator**
+        - `@my_decorator` applies the decorator `my_decorator` to the `say_hello` function.
+        - It **replaces** `say_hello()` with `wrapper()` from `my_decorator`.
+        - Now, whenever `say_hello()` is called, it actually runs `wrapper()` instead.
+    3. **Calling the Decorated Function**
+        - Since `say_hello` is now replaced with `wrapper`, calling `say_hello()` executes:
+          ```python
+          print("Something is happening before the function is called.")
+          print("Hello, World!")
+          print("Something is happening after the function is called.")
+          ```
+  * **Output:**
+      ```
+      Something is happening before the function is called.
+      Hello, World!
+      Something is happening after the function is called.
+      ```
+* **Decorators with Arguments:**
+  * To allow decorators to work with functions that take arguments:
+      ```python
+      def my_decorator(func):
+          def wrapper(*args, **kwargs):
+              print(f"Calling function {func.__name__} with arguments {args} {kwargs}")
+              return func(*args, **kwargs)
+          return wrapper
+
+      @my_decorator
+      def add(a, b):
+          return a + b
+
+      print(add(5, 3))
+      ```
+  * **Explanation:**
+    1. **Defining the Decorator**
+        - `my_decorator(func)`: Takes another function (`func`) as input.
+        - `wrapper(*args, **kwargs)`: A nested function that:
+          1. Prints a message showing the function name and arguments.
+          2. Calls `func(*args, **kwargs)`, passing all received arguments to the original function.
+          3. Returns the result of `func()`.
+        - `return wrapper`: Returns the modified function.
+    2. **Applying the Decorator**
+        - `@my_decorator` **wraps** the `add()` function inside `wrapper()`.
+        - Now, calling `add(5, 3)` **actually calls** `wrapper(5, 3)`, not `add()` directly.
+    3. **Calling the Decorated Function**
+        ```python
+        print(add(5, 3))
+        ```
+          * `add(5, 3)` is replaced by `wrapper(5, 3)`.
+          * `wrapper(5, 3)` executes:
+             1. Prints:  
+                ```
+                Calling function add with arguments (5, 3) {}
+                ```
+             2. Calls `add(5, 3)`, which returns `8`.
+             3. Returns `8` to the `print()` function.
+  * **Output:**
+      ```
+      Calling function add with arguments (5, 3) {}
+      8
+      ```
+
+
+# To run your Flask app with Gunicorn and Nginx
+* **Flask Python Code**
+    ```python
+    from flask import Flask
+
+    app = Flask(__name__)
+
+    @app.route('/', methods=['GET'])
+    def hello():
+        return "Hello, World!"
+
+    if __name__ == '__main__':
+        app.run(host="0.0.0.0", port=5000)
+    ```
+* **Install Required Packages**
+  * Make sure you have **Flask, Gunicorn, and Nginx** installed.
+  * **Install Flask and Gunicorn**
+      ```bash
+      pip install flask gunicorn
+      ```
+  * **Install Nginx (if not installed)**
+      ```bash
+      sudo apt update
+      sudo apt install nginx -y
+      ```
+* **Run Flask with Gunicorn**
+  * Navigate to your Flask project directory and start the app with Gunicorn:
+      ```bash
+      gunicorn -w 4 -b 127.0.0.1:8000 app:app
+      ```
+    - `-w 4`: 4 worker processes for handling requests.
+    - `-b 127.0.0.1:8000`: Binds Gunicorn to **localhost** on port **8000**.
+    - `app:app`: Refers to `app.py` (filename) and `app` (Flask instance).
+* **Configure Nginx as a Reverse Proxy**
+  * **Create a New Nginx Configuration File**
+      ```bash
+      sudo nano /etc/nginx/sites-available/flask_app
+      ```
+  * **Add the Following Configuration**
+      ```nginx
+      server {
+          listen 80;
+          server_name your_domain_or_ip;
+
+          location / {
+              proxy_pass http://127.0.0.1:8000;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          }
+      }
+      ```
+    - Replace `your_domain_or_ip` with your domain name or server IP.
+  * **Enable the Nginx Configuration**
+      ```bash
+      sudo ln -s /etc/nginx/sites-available/flask_app /etc/nginx/sites-enabled/
+      ```
+  * **Test and Restart Nginx**
+      ```bash
+      sudo nginx -t
+      sudo systemctl restart nginx
+      ```
+* **Run Gunicorn as a Background Service**
+  * To keep Gunicorn running even after closing the terminal, create a **systemd service**.
+  * **Create a Gunicorn Service File**
+      ```bash
+      sudo nano /etc/systemd/system/flask_app.service
+      ```
+  * **Add the Following Content**
+      ```ini
+      [Unit]
+      Description=Gunicorn instance to serve Flask app
+      After=network.target
+
+      [Service]
+      User=www-data
+      Group=www-data
+      WorkingDirectory=/path/to/your/flask/project
+      ExecStart=/usr/local/bin/gunicorn -w 4 -b 127.0.0.1:8000 app:app
+
+      [Install]
+      WantedBy=multi-user.target
+      ```
+    - Replace `/path/to/your/flask/project` with your Flask project directory.
+  * **Enable and Start the Service**
+      ```bash
+      sudo systemctl daemon-reload
+      sudo systemctl start flask_app
+      sudo systemctl enable flask_app
+      ```
+* **Verify Everything is Working**
+  * Check Gunicorn logs:
+      ```bash
+      sudo journalctl -u flask_app --no-pager
+      ```
+  * Check if Nginx is running:
+      ```bash
+      sudo systemctl status nginx
+      ```
+  * Test in your browser:
+      ```bash
+      http://your_domain_or_ip
+      ```
+  ![preview](./Images/Python49.png)
