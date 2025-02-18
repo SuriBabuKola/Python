@@ -2530,7 +2530,7 @@
 * Go to Jira API Documentation
   * Search for `Projects`, in that select `Create project`
   * Copy the Python Code into your Workplace
-* Make the Changes in the Python Code, [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/c451128af4dd7ced272dc53a3a6dddb6f038db49) for Python Code (**Changes the Python Code to Create Scrum Project**)
+* Make the Changes in the Python Code, [Refer Here](https://github.com/SuriBabuKola/Python/commit/c451128af4dd7ced272dc53a3a6dddb6f038db49) for Python Code (**Changes the Python Code to Create Scrum Project**)
   * In `url = "https://your-domain.atlassian.net/rest/api/3/project"`, provide your Jira Account URL  `url = "https://nagasuribabu.atlassian.net/rest/api/3/project"`
   * Provide `Email` and `API-Token`
   * Provide `"description"`, `"key"` and `"name"`
@@ -2547,7 +2547,7 @@
     * In that **Project Type Templates** shows the `Project Type Key` & `Project Template Key`.
     * Use based on your Project.
   * Remove remaining all Optional Payloads
-  * [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/57da258649a8f9c64e74a71b216a2ce270e4dbd2) for changeset of Python Code.
+  * [Refer Here](https://github.com/SuriBabuKola/Python/commit/57da258649a8f9c64e74a71b216a2ce270e4dbd2) for changeset of Python Code.
 * Execute the Code, it creates the New Project in Jira.
   ![preview](./Images/Python39.png)
   ![preview](./Images/Python40.png)
@@ -2555,7 +2555,7 @@
 * Go to Jira API Documentation
   * Search for `Projects`, in that select `Get all projects`
   * Copy the Python Code into your Workplace
-* Make the Changes in the Python Code, [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/6a60db0238ddf48f907b768bba73c98d659da66f) for Python Code
+* Make the Changes in the Python Code, [Refer Here](https://github.com/SuriBabuKola/Python/commit/6a60db0238ddf48f907b768bba73c98d659da66f) for Python Code
   * In `url = "https://your-domain.atlassian.net/rest/api/3/project"`, provide your Jira Account URL  `url = "https://nagasuribabu.atlassian.net/rest/api/3/project"`
   * Provide `Email` and `API-Token`
   * Change the Print Statement to Print individual Project Names.
@@ -2566,14 +2566,14 @@
       for project in output:
           print(f" - {project["name"]}")
       ```
-  * [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/1a4de133f18cef6c0fe21a0d4a122395b440e993) for the changeset of Python Code.
+  * [Refer Here](https://github.com/SuriBabuKola/Python/commit/1a4de133f18cef6c0fe21a0d4a122395b440e993) for the changeset of Python Code.
 * Execute the Code, it list the Project Names.
   ![preview](./Images/Python41.png)
 #### Create Issue (or) Ticket in Jira Project
 * Go to Jira API Documentation
   * Search for `Issues`, in that select `Create issue`
   * Copy the Python Code into your Workplace
-* Make the Changes in the Python Code, [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/8714193abfdb5512616c96c3a691d1636926e487) for Python Code
+* Make the Changes in the Python Code, [Refer Here](https://github.com/SuriBabuKola/Python/commit/8714193abfdb5512616c96c3a691d1636926e487) for Python Code
   * In `url = "https://your-domain.atlassian.net/rest/api/3/project"`, provide your Jira Account URL  `url = "https://nagasuribabu.atlassian.net/rest/api/3/project"`
   * Provide `Email` and `API-Token`
   * Go to Jira UI, during Project Isuue Creation try to findout the required fields to create Issue.
@@ -2590,7 +2590,7 @@
   * Provide `"project"`, in that remove `id` and give `key`, pass that Project Key
     * Go to `View all project`, in that shows the Projects & Keys
   * Provide `"summary"`
-  * [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/f8603c53713e0167a1648de88dd424486ef9dd25) for changeset of Python Code.
+  * [Refer Here](https://github.com/SuriBabuKola/Python/commit/f8603c53713e0167a1648de88dd424486ef9dd25) for changeset of Python Code.
 * Execute the Code, it creates the New Ticket in Jira Project.
   ![preview](./Images/Python42.png)
   ![preview](./Images/Python43.png)
@@ -2708,7 +2708,7 @@
     pip install flask
     ```
 ### SetUp API for `Create_Jira_Ticket` Python Code using Flask
-* [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/f8603c53713e0167a1648de88dd424486ef9dd25) for Create Jira Ticket Python Code.
+* [Refer Here](https://github.com/SuriBabuKola/Python/commit/f8603c53713e0167a1648de88dd424486ef9dd25) for Create Jira Ticket Python Code.
   * In this Code,
     * Add `from flask import Flask`
     * Add `app = Flask(__name__)`
@@ -2723,7 +2723,7 @@
         if __name__ == '__main__':
             app.run(host='0.0.0.0', port=5000)
         ```
-* [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/fd6788c1edcc823c414ebbb7adccd608d239ded8) for changeset of Python code using Flask.
+* [Refer Here](https://github.com/SuriBabuKola/Python/commit/fd6788c1edcc823c414ebbb7adccd608d239ded8) for changeset of Python code using Flask.
 * Execute the Python Code in VM, Copy the URL and use in GitHub Webhook.
 
 ## Create a GitHub Webhook (Trigger when Comments on Issue)
@@ -2737,7 +2737,7 @@
 
 ## Good Practices
 ### Create Jira Ticket only when Issue Comment is `/jira`
-* [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/fd6788c1edcc823c414ebbb7adccd608d239ded8) for Python code using Flask.
+* [Refer Here](https://github.com/SuriBabuKola/Python/commit/fd6788c1edcc823c414ebbb7adccd608d239ded8) for Python code using Flask.
 * Add import: `from flask import Flask, request, jsonify`
 * In this Code, add a conditional statement for Issue Comment. Write Conditional Statement before `payload`.
 * Extract GitHub Webhook data and Write to Extract Issue Comment Field
@@ -2783,7 +2783,7 @@
         }
         ```
     * `200` **(HTTP OK)** means the request was processed successfully, even though no Jira ticket was created.
-* [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/16d3c267944c6f8b082a99cbcebe1e287d81a15d) for the Changeset of Python Code.
+* [Refer Here](https://github.com/SuriBabuKola/Python/commit/16d3c267944c6f8b082a99cbcebe1e287d81a15d) for the Changeset of Python Code.
   * When Comment is `/Want explanation`, it doesn't create any Jira Ticket.
   ![preview](./Images/Python46.png)
   * When Comment is `/jira Critical Bug Need to Fix`, it creates the Jira Ticket.
@@ -2868,7 +2868,7 @@
           })
       return jsonify({"message": "No Jira ticket created, '/jira' not found in comment"}), 200
       ```
-* [Refer Here](https://github.com/AbhishekDevOpsNotes/Python/commit/57f0fb2a7562127d1cd495587f8d597bf2429145) for the Changeset of Python Code.
+* [Refer Here](https://github.com/SuriBabuKola/Python/commit/57f0fb2a7562127d1cd495587f8d597bf2429145) for the Changeset of Python Code.
   * When comment is `/jira`, it create a meaningful Jira ticket with GitHub Webhook Data.
     ![preview](./Images/Python48.png)
 
