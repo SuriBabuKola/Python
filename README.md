@@ -407,7 +407,7 @@
   * Variables are essential for this purpose.
   * Let's consider a scenario where we need to store and manipulate configuration data for a web server.
     ```python
-    #Define Configuration Variables for a Wed Server
+    #Define Configuration Variables for a Web Server
     server_name = "My_Nginx_Server"
     port = 80
     is_https_enabled = False
@@ -755,11 +755,11 @@
   * Activate the Environment:
     * On Linux/macOS:
         ```bash
-        source venv/bin/activate
+        source <Venv_Name>/bin/activate
         ```
     * On Windows:
         ```bash
-        venv\Scripts\activate
+        <Venv_Name>\Scripts\activate
         ```
   ![preview](./Images/Python29.png)
   * Deactivate the Environment:
@@ -2231,6 +2231,11 @@
     * In Select Features, search for `AWS CLI` and choose `AWS CLI devcontainer`, click `OK`
     * In Popup, click `Rebuild Now`
     * Then check `aws version` and Configure AWS CLI.
+* **Steps to use Boto3 Documentation:**
+  * [Refer Here](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) for Boto3 Official docs
+  * Click `Available Services` and Choose required Resource
+  * In that Resource, We have available methods and Choose required Method
+  * Use `Request Syntax` & `Response Syntax` and write Python Program.
 
 ## Practice Examples
 ### Write a Python Program to Create S3 Bucket in AWS
